@@ -63,7 +63,7 @@ class LddsMessageIds:
     inst_config: str = "q"
     dcp_block_ext: str = "r"
     unused_6: str = "s"
-    unused_7: str = "t"
+    start_tls: str = "t"
     user: str = "u"
 
 

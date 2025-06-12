@@ -1,8 +1,10 @@
 import logging
 from pathlib import Path
+from ssl import Purpose, SSLContext
+import ssl
 from typing import Union
 
-from .ldds_client import LddsClient
+from .ldds_client import LddsClient, TlsMode
 from .ldds_message import LddsMessage
 from .search_criteria import SearchCriteria
 
@@ -30,6 +32,8 @@ class DcpMessage:
         host: str,
         port: int = 16003,
         timeout: int = 30,
+        tls_mode: TlsMode = TlsMode.START_TLS_WANTED,
+        ssl_context: SSLContext = ssl.create_default_context(purpose=Purpose.SERVER_AUTH)
     ):
         """
         Fetches DCP messages from a server based on provided search criteria.
@@ -45,10 +49,14 @@ class DcpMessage:
         :param port: Port number for server connection (default: 16003).
         :param timeout: Connection timeout in seconds (default: 30 seconds).
             Will be passed to `socket.settimeout <https://docs.python.org/3/library/socket.html#socket.socket.settimeout>`_
+        :param tls_mode: Whether to directly use TLS, START_TLS, or no encryption
+            Default will attempt to use Tls but not fail if unavailable.
+        :param ssl_context: SSL information required to establish TLS encryption
+            Default uses system trust stores.
         :return: List of DCP messages retrieved from the server.
         """
 
-        client = LddsClient(host=host, port=port, timeout=timeout)
+        client = LddsClient(host=host, port=port, timeout=timeout, tls_mode=tls_mode, ssl_context=ssl_context)
 
         try:
             client.connect()

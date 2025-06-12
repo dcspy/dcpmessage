@@ -1,13 +1,29 @@
 import logging
 import socket
 from datetime import datetime, timezone
+from ssl import Purpose, SSLContext
+import ssl
 from typing import Union
+from enum import Enum
 
 from .credentials import Credentials, Sha1, Sha256
 from .ldds_message import LddsMessage, LddsMessageConstants, LddsMessageIds
 from .search_criteria import SearchCriteria
 
 logger = logging.getLogger(__name__)
+
+class TlsMode(Enum):
+    """
+    Level of encryption desired.
+
+    """
+
+    """
+    """
+    NO_TLS = 1 # No encryption
+    START_TLS = 2 # Start encryption after initial connection, raise exception if not able
+    START_TLS_WANTED = 3 # Start encryption after initial connection, log warning if not able
+    TLS = 4 # Encryption is required and immediately enabled before any other communications
 
 
 class BasicClient:
@@ -17,9 +33,11 @@ class BasicClient:
     :param host: The hostname or IP address of the remote server.
     :param port: The port number to connect to on the remote server.
     :param timeout: The timeout duration for the socket connection in seconds.
+    :param tls_mode: Whether to directly use TLS, START_TLS, or no encryption
+    :param ssl_context: SSL information required to establish TLS encryption
     """
 
-    def __init__(self, host: str, port: int, timeout: Union[float, int]):
+    def __init__(self, host: str, port: int, timeout: Union[float, int], tls_mode: TlsMode, ssl_context: SSLContext):
         """
         Initialize the BasicClient with the provided host, port, and timeout.
 
@@ -31,6 +49,9 @@ class BasicClient:
         self.port = port
         self.timeout = timeout
         self.socket = None
+        self.raw_socket = None
+        self.tls_mode = tls_mode
+        self.ssl_context = ssl_context
 
     def connect(self):
         """
@@ -45,6 +66,9 @@ class BasicClient:
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.settimeout(self.timeout)
             self.socket.connect((self.host, self.port))
+            if self.tls_mode == TlsMode.TLS:
+                self.raw_socket = self.socket # original socket must be closed as well as the tls socket
+                self.socket = self.ssl_context.wrap_socket(self.socket, server_hostname=self.host)
             logger.info(f"Successfully connected to {self.host}:{self.port}")
         except socket.timeout as ex:
             raise IOError(f"Connection to {self.host}:{self.port} timed out") from ex
@@ -61,6 +85,10 @@ class BasicClient:
             if self.socket:
                 self.socket.close()
                 logger.debug("Closed socket")
+
+            if self.raw_socket != None:
+                self.raw_socket.close()
+                logger.debug("Closed raw socket")
         except IOError as ex:
             logger.debug(f"Error during disconnect: {ex}")
         finally:
@@ -88,7 +116,7 @@ class LddsClient(BasicClient):
     Inherits from BasicClient and adds LDDS-specific functionality.
     """
 
-    def __init__(self, host: str, port: int, timeout: Union[float, int]):
+    def __init__(self, host: str, port: int, timeout: Union[float, int], tls_mode: TlsMode, ssl_context: SSLContext):
         """
         Initialize the LddsClient with the provided host, port, and timeout.
 
@@ -96,7 +124,24 @@ class LddsClient(BasicClient):
         :param port: The port number to connect to on the LDDS server.
         :param timeout: The timeout duration for the socket connection in seconds.
         """
-        super().__init__(host=host, port=port, timeout=timeout)
+        super().__init__(host=host, port=port, timeout=timeout, tls_mode=tls_mode, ssl_context=ssl_context)
+
+    def connect(self):
+        """
+        Start Tls, is used *MUST* be the first command sent
+        """
+        super().connect()
+        if self.tls_mode in (TlsMode.START_TLS, TlsMode.START_TLS_WANTED):
+            logger.info("Attempting TLS upgrade.")
+            msg = self.request_dcp_message(LddsMessageIds.start_tls)
+            if msg.message_data == b"proceed":
+                self.raw_socket = self.socket
+                self.socket = self.ssl_context.wrap_socket(self.socket, server_hostname=self.host)
+                logger.info("TLS upgrade successful")
+            elif msg.message_data != b"proceed" and self.tls_mode == TlsMode.START_TLS:
+                raise IOError(f"Server {self.host} does not support Start TLS operation.")
+            else:
+                logger.warning(f"TLS upgrade failed. {msg.message_data}")
 
     def receive_data(
         self,
