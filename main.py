@@ -2,6 +2,7 @@ import json
 import logging
 
 from dcpmessage.dcp_message import DcpMessage
+from dcpmessage.ldds_client import TlsMode
 
 logging.basicConfig(
     level=logging.INFO,
@@ -10,15 +11,14 @@ logging.basicConfig(
 )
 
 if __name__ == "__main__":
-    with open("./credentials.json", "r") as credentials_file:
-        credentials = json.load(credentials_file)
 
     messages = DcpMessage.get(
-        username=credentials["username"],
-        password=credentials["password"],
-        search_criteria="./test_search_criteria.json",
-        host="cdadata.wcda.noaa.gov",
+        username="anonymous",
+        password="anonymous",
+        search_criteria={"DRS_SINCE": "now - 1hour"},
+        host="lrgs.opendcs.org",
     )
+
     # DCP Messages
     print("============")
     print("DCP MESSAGES")
