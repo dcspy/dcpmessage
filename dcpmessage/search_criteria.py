@@ -28,7 +28,6 @@ class SearchCriteriaConstants:
     """
     Constants used in SearchCriteria.
 
-
     :param max_sources: The maximum number of sources that can be added to the search criteria.
     """
 
@@ -38,7 +37,6 @@ class SearchCriteriaConstants:
 class DcpAddress:
     """
     Class representing a DCP address.
-
 
     :param address: (str) The DCP address, which must be 8 characters long.
     """
@@ -50,7 +48,10 @@ class DcpAddress:
         :param address: The address string, which must be exactly 8 characters long.
         :raises AssertionError: If the address is not 8 characters long.
         """
-        assert len(address) == 8
+        if len(address) != 8:
+            raise ValueError(
+                f"length of DCP address '{address}' is not 8 characters long."
+            )
         self.address = address
 
     def __eq__(self, other):
