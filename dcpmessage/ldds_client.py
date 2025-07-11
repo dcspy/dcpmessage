@@ -1,10 +1,9 @@
 import logging
 import socket
 from datetime import datetime, timezone
-from ssl import Purpose, SSLContext
-import ssl
-from typing import Union
 from enum import Enum
+from ssl import SSLContext
+from typing import Optional, Union
 
 from .credentials import Credentials, Sha1, Sha256
 from .ldds_message import LddsMessage, LddsMessageConstants, LddsMessageIds
@@ -12,38 +11,49 @@ from .search_criteria import SearchCriteria
 
 logger = logging.getLogger(__name__)
 
+
 class TlsMode(Enum):
     """
-    Level of encryption desired.
-
+    Enum representing levels of Transport Layer Security (TLS) to apply during the connection to the server.
     """
 
-    """
-    """
-    NO_TLS = 1 # No encryption
-    START_TLS = 2 # Start encryption after initial connection, raise exception if not able
-    START_TLS_WANTED = 3 # Start encryption after initial connection, log warning if not able
-    TLS = 4 # Encryption is required and immediately enabled before any other communications
+    # No TLS encryption will be used at all.
+    DISABLED = 1
+
+    # Attempt to upgrade to TLS after establishing the connection;
+    # continue without TLS if the upgrade fails, but log a warning.
+    OPTIONAL_STARTTLS = 2
+
+    # Attempt to upgrade to TLS after establishing the connection;
+    # raise an error if the upgrade fails.
+    REQUIRED_STARTTLS = 3
+
+    # Full TLS required from the beginning of the connection;
+    # no communication occurs before encryption is established.
+    IMMEDIATE_TLS = 4
 
 
-class BasicClient:
+class LddsClient:
     """
-    A class for managing basic socket connections to a remote server.
-
-    :param host: The hostname or IP address of the remote server.
-    :param port: The port number to connect to on the remote server.
-    :param timeout: The timeout duration for the socket connection in seconds.
-    :param tls_mode: Whether to directly use TLS, START_TLS, or no encryption
-    :param ssl_context: SSL information required to establish TLS encryption
+    A client for communicating with an LDDS (Low Data Rate Demodulation System) server.
     """
 
-    def __init__(self, host: str, port: int, timeout: Union[float, int], tls_mode: TlsMode, ssl_context: SSLContext):
+    def __init__(
+        self,
+        host: str,
+        port: int,
+        timeout: Union[float, int],
+        tls_mode: TlsMode,
+        ssl_context: Optional[SSLContext],
+    ):
         """
-        Initialize the BasicClient with the provided host, port, and timeout.
+        Initialize the LddsClient with the provided host, port, and timeout.
 
         :param host: The hostname or IP address of the remote server.
         :param port: The port number to connect to on the remote server.
         :param timeout: The timeout duration for the socket connection in seconds.
+        :param tls_mode: Whether to directly use TLS, START_TLS, or no encryption
+        :param ssl_context: SSL information required to establish TLS encryption
         """
         self.host = host
         self.port = port
@@ -66,14 +76,35 @@ class BasicClient:
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.settimeout(self.timeout)
             self.socket.connect((self.host, self.port))
-            if self.tls_mode == TlsMode.TLS:
-                self.raw_socket = self.socket # original socket must be closed as well as the tls socket
-                self.socket = self.ssl_context.wrap_socket(self.socket, server_hostname=self.host)
-            logger.info(f"Successfully connected to {self.host}:{self.port}")
         except socket.timeout as ex:
             raise IOError(f"Connection to {self.host}:{self.port} timed out") from ex
         except socket.error as ex:
             raise IOError(f"Cannot connect to {self.host}:{self.port}") from ex
+
+        match self.tls_mode:
+            case TlsMode.DISABLED:
+                pass
+            case TlsMode.IMMEDIATE_TLS:
+                self.raw_socket = self.socket
+                self.socket = self.ssl_context.wrap_socket(
+                    self.socket, server_hostname=self.host
+                )
+                logger.info(f"Successfully connected to {self.host}:{self.port}")
+            case TlsMode.REQUIRED_STARTTLS | TlsMode.OPTIONAL_STARTTLS:
+                logger.info("Attempting TLS upgrade.")
+                msg = self.request_dcp_message(LddsMessageIds.start_tls)
+                if msg.message_data != b"proceed":
+                    logger.warning(f"TLS upgrade failed. {msg.message_data}")
+                    if self.tls_mode == TlsMode.REQUIRED_STARTTLS:
+                        raise IOError(
+                            f"Server {self.host} does not support TLS upgrade."
+                        )
+                else:
+                    self.raw_socket = self.socket
+                    self.socket = self.ssl_context.wrap_socket(
+                        self.socket, server_hostname=self.host
+                    )
+                    logger.info("TLS upgrade successful")
 
     def disconnect(self):
         """
@@ -82,17 +113,17 @@ class BasicClient:
         :return: None
         """
         try:
-            if self.socket:
-                self.socket.close()
-                logger.debug("Closed socket")
-
-            if self.raw_socket != None:
-                self.raw_socket.close()
-                logger.debug("Closed raw socket")
-        except IOError as ex:
-            logger.debug(f"Error during disconnect: {ex}")
+            for attr in ["socket", "raw_socket"]:
+                sock = getattr(self, attr, None)
+                if sock:
+                    try:
+                        sock.close()
+                        logger.debug(f"Closed {attr}")
+                    except IOError as ex:
+                        logger.debug(f"Error closing {attr}: {ex}")
         finally:
             self.socket = None
+            self.raw_socket = None
 
     def send_data(
         self,
@@ -106,42 +137,8 @@ class BasicClient:
         :return: None
         """
         if self.socket is None:
-            raise IOError("BasicClient socket closed.")
+            raise IOError("Client socket closed.")
         self.socket.sendall(data)
-
-
-class LddsClient(BasicClient):
-    """
-    A client for communicating with an LDDS (Low Data Rate Demodulation System) server.
-    Inherits from BasicClient and adds LDDS-specific functionality.
-    """
-
-    def __init__(self, host: str, port: int, timeout: Union[float, int], tls_mode: TlsMode, ssl_context: SSLContext):
-        """
-        Initialize the LddsClient with the provided host, port, and timeout.
-
-        :param host: The hostname or IP address of the LDDS server.
-        :param port: The port number to connect to on the LDDS server.
-        :param timeout: The timeout duration for the socket connection in seconds.
-        """
-        super().__init__(host=host, port=port, timeout=timeout, tls_mode=tls_mode, ssl_context=ssl_context)
-
-    def connect(self):
-        """
-        Start Tls, is used *MUST* be the first command sent
-        """
-        super().connect()
-        if self.tls_mode in (TlsMode.START_TLS, TlsMode.START_TLS_WANTED):
-            logger.info("Attempting TLS upgrade.")
-            msg = self.request_dcp_message(LddsMessageIds.start_tls)
-            if msg.message_data == b"proceed":
-                self.raw_socket = self.socket
-                self.socket = self.ssl_context.wrap_socket(self.socket, server_hostname=self.host)
-                logger.info("TLS upgrade successful")
-            elif msg.message_data != b"proceed" and self.tls_mode == TlsMode.START_TLS:
-                raise IOError(f"Server {self.host} does not support Start TLS operation.")
-            else:
-                logger.warning(f"TLS upgrade failed. {msg.message_data}")
 
     def receive_data(
         self,
@@ -155,11 +152,11 @@ class LddsClient(BasicClient):
         :raises IOError: If the socket is not connected.
         """
         if self.socket is None:
-            raise IOError("BasicClient socket closed.")
+            raise IOError("Client socket closed.")
 
         data = self.socket.recv(buffer_size)
         if len(data) == 0:
-            raise IOError("BasicClient socket closed.")
+            raise IOError("Client socket closed.")
 
         ldds_message_length = LddsMessage.get_total_length(data)
         while len(data) < ldds_message_length:

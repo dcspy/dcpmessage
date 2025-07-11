@@ -25,8 +25,9 @@ credentials.json
 creds.txt
 
 
-# Test-specific files
+# Test artifacts and local scripts
 test_search_criteria.json
+main.py
 
 # Miscellaneous
 *.sc

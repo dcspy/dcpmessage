@@ -1,7 +1,6 @@
 import logging
-from pathlib import Path
-from ssl import Purpose, SSLContext
 import ssl
+from pathlib import Path
 from typing import Union
 
 from .ldds_client import LddsClient, TlsMode
@@ -15,7 +14,6 @@ class DcpMessage:
     """
     Class for handling DCP messages, including fetching and processing them
     from a remote server using the LDDS protocol.
-
 
     :param DATA_LENGTH: Standard length of the data field in a DCP message.
     :param: HEADER_LENGTH: Standard length of the header in a DCP message.
@@ -32,8 +30,7 @@ class DcpMessage:
         host: str,
         port: int = 16003,
         timeout: int = 30,
-        tls_mode: TlsMode = TlsMode.START_TLS_WANTED,
-        ssl_context: SSLContext = ssl.create_default_context(purpose=Purpose.SERVER_AUTH)
+        tls_mode: int = 1,
     ):
         """
         Fetches DCP messages from a server based on provided search criteria.
@@ -49,14 +46,41 @@ class DcpMessage:
         :param port: Port number for server connection (default: 16003).
         :param timeout: Connection timeout in seconds (default: 30 seconds).
             Will be passed to `socket.settimeout <https://docs.python.org/3/library/socket.html#socket.socket.settimeout>`_
-        :param tls_mode: Whether to directly use TLS, START_TLS, or no encryption
-            Default will attempt to use Tls but not fail if unavailable.
-        :param ssl_context: SSL information required to establish TLS encryption
-            Default uses system trust stores.
+        :param tls_mode: TLS configuration level for the connection (default: 1 - DISABLED).
+            Must be one of the following values from the `TlsMode` enum:
+                * 1: Do not use TLS.
+                * 2: Try to upgrade to TLS via STARTTLS. Continue without TLS if upgrade fails.
+                * 3: Try to upgrade via STARTTLS. Fail if TLS cannot be established.
+                * 4: Require full TLS before any communication begins.
         :return: List of DCP messages retrieved from the server.
+        :raises ValueError: If `tls_mode` is not valid value.
+        :raises TypeError: If `search_criteria` is not a valid type (dict, str, or Path).
+        :raises Exception: If connection, authentication, or message retrieval fails.
         """
 
-        client = LddsClient(host=host, port=port, timeout=timeout, tls_mode=tls_mode, ssl_context=ssl_context)
+        try:
+            tls_mode = TlsMode(tls_mode)
+        except ValueError:
+            valid_values = ", ".join(f"{e.value} ({e.name})" for e in TlsMode)
+            raise ValueError(
+                f"Invalid tls_mode: {tls_mode}. Must be one of: {valid_values}"
+            )
+
+        match tls_mode:
+            case TlsMode.DISABLED:
+                ssl_context = None
+            case _:
+                ssl_context = ssl.create_default_context(
+                    purpose=ssl.Purpose.SERVER_AUTH
+                )
+
+        client = LddsClient(
+            host=host,
+            port=port,
+            timeout=timeout,
+            tls_mode=tls_mode,
+            ssl_context=ssl_context,
+        )
 
         try:
             client.connect()
