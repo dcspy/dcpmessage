@@ -85,26 +85,30 @@ class LddsClient:
             case TlsMode.DISABLED:
                 pass
             case TlsMode.IMMEDIATE_TLS:
-                self.raw_socket = self.socket
-                self.socket = self.ssl_context.wrap_socket(
-                    self.socket, server_hostname=self.host
-                )
-                logger.info(f"Successfully connected to {self.host}:{self.port}")
-            case TlsMode.REQUIRED_STARTTLS | TlsMode.OPTIONAL_STARTTLS:
-                logger.info("Attempting TLS upgrade.")
-                msg = self.request_dcp_message(LddsMessageIds.start_tls)
-                if msg.message_data != b"proceed":
-                    logger.warning(f"TLS upgrade failed. {msg.message_data}")
-                    if self.tls_mode == TlsMode.REQUIRED_STARTTLS:
-                        raise IOError(
-                            f"Server {self.host} does not support TLS upgrade."
-                        )
-                else:
-                    self.raw_socket = self.socket
-                    self.socket = self.ssl_context.wrap_socket(
-                        self.socket, server_hostname=self.host
-                    )
-                    logger.info("TLS upgrade successful")
+                self._wrap_tls()
+            case TlsMode.OPTIONAL_STARTTLS | TlsMode.REQUIRED_STARTTLS:
+                self._attempt_starttls_upgrade()
+        logger.info(f"Successfully connected to {self.host}:{self.port}")
+
+    def _wrap_tls(self):
+        self.raw_socket = self.socket
+        self.socket = self.ssl_context.wrap_socket(
+            self.socket, server_hostname=self.host
+        )
+
+    def _attempt_starttls_upgrade(self):
+        logger.info("Attempting STARTTLS upgrade.")
+        msg = self.request_dcp_message(LddsMessageIds.start_tls)
+
+        if msg.message_data == b"proceed":
+            self._wrap_tls()
+            logger.info("TLS upgrade successful.")
+            return
+
+        if self.tls_mode == TlsMode.REQUIRED_STARTTLS:
+            raise IOError(f"TLS upgrade required but failed: {msg.message_data!r}")
+
+        logger.warning(f"TLS upgrade not supported by server: {msg.message_data!r}")
 
     def disconnect(self):
         """
@@ -112,18 +116,23 @@ class LddsClient:
 
         :return: None
         """
-        try:
-            for attr in ["socket", "raw_socket"]:
-                sock = getattr(self, attr, None)
-                if sock:
-                    try:
-                        sock.close()
-                        logger.debug(f"Closed {attr}")
-                    except IOError as ex:
-                        logger.debug(f"Error closing {attr}: {ex}")
-        finally:
-            self.socket = None
-            self.raw_socket = None
+        any_socket_closed = False
+
+        for attr in ["socket", "raw_socket"]:
+            sock = getattr(self, attr, None)
+            if sock:
+                try:
+                    sock.close()
+                    any_socket_closed = True
+                    logger.debug(f"Closed {attr}")
+
+                except IOError as ex:
+                    logger.error(f"Error closing {attr}: {ex}")
+
+        self.socket = None
+        self.raw_socket = None
+        if any_socket_closed:
+            logger.info(f"Disconnected from {self.host}:{self.port}")
 
     def send_data(
         self,
@@ -160,14 +169,17 @@ class LddsClient:
 
         ldds_message_length = LddsMessage.get_total_length(data)
         while len(data) < ldds_message_length:
-            data += self.socket.recv(buffer_size)
+            chunk = self.socket.recv(buffer_size)
+            if not chunk:
+                raise IOError("Incomplete data received from server.")
+            data += chunk
 
         return data
 
     def authenticate_user(
         self,
-        user_name: str = "user",
-        password: str = "pass",
+        user_name: str,
+        password: str,
     ):
         """
         Authenticate a user with the LDDS server using the provided username and password.
@@ -180,7 +192,6 @@ class LddsClient:
         msg_id = LddsMessageIds.auth_hello
         credentials = Credentials(username=user_name, password=password)
 
-        is_authenticated = False
         for hash_algo in [Sha1, Sha256]:
             auth_str = credentials.get_authenticated_hello(
                 datetime.now(timezone.utc), hash_algo()
@@ -188,17 +199,13 @@ class LddsClient:
             logger.debug(auth_str)
             ldds_message = self.request_dcp_message(msg_id, auth_str)
             server_error = ldds_message.server_error
-            if server_error is not None:
-                logger.debug(str(server_error))
-            else:
-                is_authenticated = True
+            if server_error is None:
+                logger.info("Successfully authenticated user")
+                return
 
-        if is_authenticated:
-            logger.info("Successfully authenticated user")
-        else:
-            raise Exception(
-                f"Could not authenticate for user:{user_name}\n{server_error}"
-            )
+            logger.debug(str(server_error))
+
+        raise Exception(f"Could not authenticate for user:{user_name}\n{server_error}")
 
     def request_dcp_message(
         self,
@@ -214,9 +221,9 @@ class LddsClient:
         """
         if isinstance(message_data, str):
             message_data = message_data.encode()
+
         message = LddsMessage.create(message_id=message_id, message_data=message_data)
-        message_bytes = message.to_bytes()
-        self.send_data(message_bytes)
+        self.send_data(message.to_bytes())
         server_response = self.receive_data()
         return LddsMessage.parse(server_response)
 
@@ -231,16 +238,17 @@ class LddsClient:
         :return: None
         """
         data_to_send = bytearray(50) + bytes(search_criteria)
-        logger.debug(f"Sending criteria message (filesize = {len(data_to_send)} bytes)")
+        logger.debug(f"Sending criteria message (size = {len(data_to_send)} bytes)")
         ldds_message = self.request_dcp_message(
             LddsMessageIds.search_criteria, data_to_send
         )
 
         server_error = ldds_message.server_error
-        if server_error is not None:
-            server_error.raise_exception()
-        else:
+        if server_error is None:
             logger.info("Search criteria sent successfully.")
+            return
+
+        server_error.raise_exception()
 
     def request_dcp_blocks(
         self,

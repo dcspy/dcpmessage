@@ -24,7 +24,6 @@ docs/_build/
 credentials.json
 creds.txt
 
-
 # Test artifacts and local scripts
 test_search_criteria.json
 main.py
