@@ -1,0 +1,1248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dcpmessage package &mdash; dcpmessage 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://dcspy.github.io/dcpmessage/dcpmessage.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="dcpmessage" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dcpmessage
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">dcpmessage</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">dcpmessage package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage.credentials">dcpmessage.credentials module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.credentials.HashAlgo"><code class="docutils literal notranslate"><span class="pre">HashAlgo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.credentials.Sha1"><code class="docutils literal notranslate"><span class="pre">Sha1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.credentials.Sha256"><code class="docutils literal notranslate"><span class="pre">Sha256</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.credentials.Credentials"><code class="docutils literal notranslate"><span class="pre">Credentials</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage.dcp_message">dcpmessage.dcp_message module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.dcp_message.DcpMessage"><code class="docutils literal notranslate"><span class="pre">DcpMessage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage.exceptions">dcpmessage.exceptions module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.exceptions.ServerErrorCode"><code class="docutils literal notranslate"><span class="pre">ServerErrorCode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.exceptions.ServerError"><code class="docutils literal notranslate"><span class="pre">ServerError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.exceptions.ProtocolError"><code class="docutils literal notranslate"><span class="pre">ProtocolError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.exceptions.LddsMessageError"><code class="docutils literal notranslate"><span class="pre">LddsMessageError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage.ldds_client">dcpmessage.ldds_client module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.ldds_client.TlsMode"><code class="docutils literal notranslate"><span class="pre">TlsMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.ldds_client.LddsClient"><code class="docutils literal notranslate"><span class="pre">LddsClient</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage.ldds_message">dcpmessage.ldds_message module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.ldds_message.LddsMessageConstants"><code class="docutils literal notranslate"><span class="pre">LddsMessageConstants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.ldds_message.LddsMessageIds"><code class="docutils literal notranslate"><span class="pre">LddsMessageIds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.ldds_message.LddsMessage"><code class="docutils literal notranslate"><span class="pre">LddsMessage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage.search_criteria">dcpmessage.search_criteria module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.search_criteria.DcpMessageSource"><code class="docutils literal notranslate"><span class="pre">DcpMessageSource</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.search_criteria.SearchCriteriaConstants"><code class="docutils literal notranslate"><span class="pre">SearchCriteriaConstants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.search_criteria.DcpAddress"><code class="docutils literal notranslate"><span class="pre">DcpAddress</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.search_criteria.SearchCriteria"><code class="docutils literal notranslate"><span class="pre">SearchCriteria</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage.utils">dcpmessage.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dcpmessage.utils.ByteUtil"><code class="docutils literal notranslate"><span class="pre">ByteUtil</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dcpmessage">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dcpmessage</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">dcpmessage</a></li>
+      <li class="breadcrumb-item active">dcpmessage package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dcpmessage-package">
+<h1>dcpmessage package<a class="headerlink" href="#dcpmessage-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-dcpmessage.credentials">
+<span id="dcpmessage-credentials-module"></span><h2>dcpmessage.credentials module<a class="headerlink" href="#module-dcpmessage.credentials" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.credentials.HashAlgo">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HashAlgo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.credentials.HashAlgo" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a hashing algorithm.</p>
+<p>This class serves as a base class for different hashing algorithms,
+such as SHA-1 and SHA-256, providing a common interface to initialize
+and create new hash objects.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.credentials.HashAlgo.algorithm">
+<span class="sig-name descname"><span class="pre">algorithm</span></span><a class="headerlink" href="#dcpmessage.credentials.HashAlgo.algorithm" title="Link to this definition"></a></dt>
+<dd><p>The name of the hashing algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.credentials.HashAlgo.new">
+<span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.credentials.HashAlgo.new" title="Link to this definition"></a></dt>
+<dd><p>Create a new hash object using the specified algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new hash object from the hashlib library.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.credentials.Sha1">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Sha1</span></span><a class="headerlink" href="#dcpmessage.credentials.Sha1" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dcpmessage.credentials.HashAlgo" title="dcpmessage.credentials.HashAlgo"><code class="xref py py-class docutils literal notranslate"><span class="pre">HashAlgo</span></code></a></p>
+<p>A class representing the SHA-1 hashing algorithm.</p>
+<p>Inherits from the HashAlgo class and is pre-configured with the “sha1” algorithm.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.credentials.Sha256">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Sha256</span></span><a class="headerlink" href="#dcpmessage.credentials.Sha256" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dcpmessage.credentials.HashAlgo" title="dcpmessage.credentials.HashAlgo"><code class="xref py py-class docutils literal notranslate"><span class="pre">HashAlgo</span></code></a></p>
+<p>A class representing the SHA-256 hashing algorithm.</p>
+<p>Inherits from the HashAlgo class and is pre-configured with the “sha256” algorithm.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.credentials.Credentials">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Credentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.credentials.Credentials" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.credentials.Credentials.get_preliminary_hash">
+<span class="sig-name descname"><span class="pre">get_preliminary_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#dcpmessage.credentials.Credentials.get_preliminary_hash" title="Link to this definition"></a></dt>
+<dd><p>Generate the preliminary hash for the password.</p>
+<p>This method creates a hash by combining the username and password multiple times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> – The password to hash.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resulting hash as bytes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.credentials.Credentials.get_authenticator_hash">
+<span class="sig-name descname"><span class="pre">get_authenticator_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_algo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dcpmessage.credentials.HashAlgo" title="dcpmessage.credentials.HashAlgo"><span class="pre">HashAlgo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#dcpmessage.credentials.Credentials.get_authenticator_hash" title="Link to this definition"></a></dt>
+<dd><p>Generate an authenticator hash using a specified hash algorithm.</p>
+<p>This hash is used for authenticating the user based on the current time and the user’s credentials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> – The current time as a datetime object.</p></li>
+<li><p><strong>hash_algo</strong> – The hashing algorithm to use (e.g., Sha1, Sha256).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The authenticator hash as a hexadecimal string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.credentials.Credentials.get_authenticated_hello">
+<span class="sig-name descname"><span class="pre">get_authenticated_hello</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_algo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dcpmessage.credentials.HashAlgo" title="dcpmessage.credentials.HashAlgo"><span class="pre">HashAlgo</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.credentials.Credentials.get_authenticated_hello" title="Link to this definition"></a></dt>
+<dd><p>Create an authenticated hello message for the user.</p>
+<p>This method combines the username, current time, authenticator hash, and protocol version
+into a single string used for authentication with the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> – The current time as a datetime object.</p></li>
+<li><p><strong>hash_algo</strong> – The hashing algorithm to use for the authenticator hash (e.g., Sha1, Sha256).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The authenticated hello message as a string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dcpmessage.dcp_message">
+<span id="dcpmessage-dcp-message-module"></span><h2>dcpmessage.dcp_message module<a class="headerlink" href="#module-dcpmessage.dcp_message" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.dcp_message.DcpMessage">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DcpMessage</span></span><a class="headerlink" href="#dcpmessage.dcp_message.DcpMessage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for handling DCP messages, including fetching and processing them
+from a remote server using the LDDS protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DATA_LENGTH: Standard length of the data field in a DCP message.</p>
+</dd>
+<dt class="field-even">Param<span class="colon">:</span></dt>
+<dd class="field-even"><p>HEADER_LENGTH: Standard length of the header in a DCP message.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.dcp_message.DcpMessage.DATA_LENGTH">
+<span class="sig-name descname"><span class="pre">DATA_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#dcpmessage.dcp_message.DcpMessage.DATA_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.dcp_message.DcpMessage.HEADER_LENGTH">
+<span class="sig-name descname"><span class="pre">HEADER_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">37</span></em><a class="headerlink" href="#dcpmessage.dcp_message.DcpMessage.HEADER_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.dcp_message.DcpMessage.get">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_criteria</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16003</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.dcp_message.DcpMessage.get" title="Link to this definition"></a></dt>
+<dd><p>Fetches DCP messages from a server based on provided search criteria.</p>
+<p>This method handles the complete process of connecting to the server,
+authenticating, sending search criteria, retrieving DCP messages, and
+finally disconnecting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> – Username for server authentication.</p></li>
+<li><p><strong>password</strong> – Password for server authentication.</p></li>
+<li><p><strong>search_criteria</strong> – File path to search criteria or search criteria as a string.</p></li>
+<li><p><strong>host</strong> – Hostname or IP address of the server.</p></li>
+<li><p><strong>port</strong> – Port number for server connection (default: 16003).</p></li>
+<li><p><strong>timeout</strong> – Connection timeout in seconds (default: 30 seconds).
+Will be passed to <a class="reference external" href="https://docs.python.org/3/library/socket.html#socket.socket.settimeout">socket.settimeout</a></p></li>
+<li><p><strong>tls_mode</strong> – <p>TLS configuration level for the connection (default: 1 - DISABLED).
+Must be one of the following values from the <cite>TlsMode</cite> enum:</p>
+<ul>
+<li><p>1: Do not use TLS.</p></li>
+<li><p>2: Try to upgrade to TLS via STARTTLS. Continue without TLS if upgrade fails.</p></li>
+<li><p>3: Try to upgrade via STARTTLS. Fail if TLS cannot be established.</p></li>
+<li><p>4: Require full TLS before any communication begins.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of DCP messages retrieved from the server.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <cite>tls_mode</cite> is not valid value.</p></li>
+<li><p><strong>TypeError</strong> – If <cite>search_criteria</cite> is not a valid type (dict, str, or Path).</p></li>
+<li><p><strong>Exception</strong> – If connection, authentication, or message retrieval fails.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.dcp_message.DcpMessage.explode">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">explode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dcpmessage.ldds_message.LddsMessage" title="dcpmessage.ldds_message.LddsMessage"><span class="pre">LddsMessage</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dcpmessage.dcp_message.DcpMessage.explode" title="Link to this definition"></a></dt>
+<dd><p>Splits a message block bytes containing multiple DCP messages into individual messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message_blocks</strong> – message block (concatenated response from the server).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of individual DCP messages.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dcpmessage.exceptions">
+<span id="dcpmessage-exceptions-module"></span><h2>dcpmessage.exceptions module<a class="headerlink" href="#module-dcpmessage.exceptions" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ServerErrorCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum for server error codes, each with a numeric value and description.</p>
+<p>Each member has:</p>
+<ul class="simple">
+<li><p>A unique numeric value (int)</p></li>
+<li><p>A human-readable description (str), accessible via <cite>.description</cite></p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DSUCCESS">
+<span class="sig-name descname"><span class="pre">DSUCCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DSUCCESS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOFLAG">
+<span class="sig-name descname"><span class="pre">DNOFLAG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOFLAG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DDUMMY">
+<span class="sig-name descname"><span class="pre">DDUMMY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DDUMMY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DLONGLIST">
+<span class="sig-name descname"><span class="pre">DLONGLIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DLONGLIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DARCERROR">
+<span class="sig-name descname"><span class="pre">DARCERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DARCERROR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOCONFIG">
+<span class="sig-name descname"><span class="pre">DNOCONFIG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOCONFIG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOSRCHSHM">
+<span class="sig-name descname"><span class="pre">DNOSRCHSHM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOSRCHSHM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNODIRLOCK">
+<span class="sig-name descname"><span class="pre">DNODIRLOCK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNODIRLOCK" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNODIRFILE">
+<span class="sig-name descname"><span class="pre">DNODIRFILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNODIRFILE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOMSGFILE">
+<span class="sig-name descname"><span class="pre">DNOMSGFILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOMSGFILE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DDIRSEMERR">
+<span class="sig-name descname"><span class="pre">DDIRSEMERR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DDIRSEMERR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DMSGTIMEOUT">
+<span class="sig-name descname"><span class="pre">DMSGTIMEOUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DMSGTIMEOUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNONETLIST">
+<span class="sig-name descname"><span class="pre">DNONETLIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNONETLIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOSRCHCRIT">
+<span class="sig-name descname"><span class="pre">DNOSRCHCRIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">13</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOSRCHCRIT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADSINCE">
+<span class="sig-name descname"><span class="pre">DBADSINCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADSINCE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADUNTIL">
+<span class="sig-name descname"><span class="pre">DBADUNTIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADUNTIL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADNLIST">
+<span class="sig-name descname"><span class="pre">DBADNLIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADNLIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADADDR">
+<span class="sig-name descname"><span class="pre">DBADADDR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">17</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADADDR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADEMAIL">
+<span class="sig-name descname"><span class="pre">DBADEMAIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADEMAIL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADRTRAN">
+<span class="sig-name descname"><span class="pre">DBADRTRAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">19</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADRTRAN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNLISTXCD">
+<span class="sig-name descname"><span class="pre">DNLISTXCD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNLISTXCD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DADDRXCD">
+<span class="sig-name descname"><span class="pre">DADDRXCD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DADDRXCD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOLRGSLAST">
+<span class="sig-name descname"><span class="pre">DNOLRGSLAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">22</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOLRGSLAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DWRONGMSG">
+<span class="sig-name descname"><span class="pre">DWRONGMSG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">23</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DWRONGMSG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOMOREPROC">
+<span class="sig-name descname"><span class="pre">DNOMOREPROC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOMOREPROC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADDAPSSTAT">
+<span class="sig-name descname"><span class="pre">DBADDAPSSTAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">25</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADDAPSSTAT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADTIMEOUT">
+<span class="sig-name descname"><span class="pre">DBADTIMEOUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">26</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADTIMEOUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DCANTIOCTL">
+<span class="sig-name descname"><span class="pre">DCANTIOCTL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">27</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DCANTIOCTL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DUNTILDRS">
+<span class="sig-name descname"><span class="pre">DUNTILDRS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">28</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DUNTILDRS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADCHANNEL">
+<span class="sig-name descname"><span class="pre">DBADCHANNEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">29</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADCHANNEL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DCANTOPENSER">
+<span class="sig-name descname"><span class="pre">DCANTOPENSER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DCANTOPENSER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADDCPNAME">
+<span class="sig-name descname"><span class="pre">DBADDCPNAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">31</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADDCPNAME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNONAMELIST">
+<span class="sig-name descname"><span class="pre">DNONAMELIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNONAMELIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DIDXFILEIO">
+<span class="sig-name descname"><span class="pre">DIDXFILEIO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">33</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DIDXFILEIO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADSEARCHCRIT">
+<span class="sig-name descname"><span class="pre">DBADSEARCHCRIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">34</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADSEARCHCRIT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DUNTIL">
+<span class="sig-name descname"><span class="pre">DUNTIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">35</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DUNTIL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DJAVAIF">
+<span class="sig-name descname"><span class="pre">DJAVAIF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">36</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DJAVAIF" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOTATTACHED">
+<span class="sig-name descname"><span class="pre">DNOTATTACHED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">37</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOTATTACHED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADKEYWORD">
+<span class="sig-name descname"><span class="pre">DBADKEYWORD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">38</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADKEYWORD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DPARSEERROR">
+<span class="sig-name descname"><span class="pre">DPARSEERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">39</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DPARSEERROR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNONAMELISTSEM">
+<span class="sig-name descname"><span class="pre">DNONAMELISTSEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNONAMELISTSEM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADINPUTFILE">
+<span class="sig-name descname"><span class="pre">DBADINPUTFILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">41</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADINPUTFILE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DARCFILEIO">
+<span class="sig-name descname"><span class="pre">DARCFILEIO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">42</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DARCFILEIO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOARCFILE">
+<span class="sig-name descname"><span class="pre">DNOARCFILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">43</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOARCFILE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DICPIOCTL">
+<span class="sig-name descname"><span class="pre">DICPIOCTL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">44</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DICPIOCTL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DICPIOERR">
+<span class="sig-name descname"><span class="pre">DICPIOERR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">45</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DICPIOERR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DINVALIDUSER">
+<span class="sig-name descname"><span class="pre">DINVALIDUSER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">46</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DINVALIDUSER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DDDSAUTHFAILED">
+<span class="sig-name descname"><span class="pre">DDDSAUTHFAILED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">47</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DDDSAUTHFAILED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DDDSINTERNAL">
+<span class="sig-name descname"><span class="pre">DDDSINTERNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">48</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DDDSINTERNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DDDSFATAL">
+<span class="sig-name descname"><span class="pre">DDDSFATAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">49</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DDDSFATAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOSUCHSOURCE">
+<span class="sig-name descname"><span class="pre">DNOSUCHSOURCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOSUCHSOURCE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DALREADYATTACHED">
+<span class="sig-name descname"><span class="pre">DALREADYATTACHED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">51</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DALREADYATTACHED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DNOSUCHFILE">
+<span class="sig-name descname"><span class="pre">DNOSUCHFILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">52</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DNOSUCHFILE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DTOOMANYDCPS">
+<span class="sig-name descname"><span class="pre">DTOOMANYDCPS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">53</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DTOOMANYDCPS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DBADPASSWORD">
+<span class="sig-name descname"><span class="pre">DBADPASSWORD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">54</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DBADPASSWORD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.DSTRONGREQUIRED">
+<span class="sig-name descname"><span class="pre">DSTRONGREQUIRED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">55</span></em><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.DSTRONGREQUIRED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerErrorCode.description">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#dcpmessage.exceptions.ServerErrorCode.description" title="Link to this definition"></a></dt>
+<dd><p>Returns the description of the error code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Human-readable description.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerError">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ServerError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_code_no</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_code_no</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.exceptions.ServerError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerError.is_end_of_message">
+<span class="sig-name descname"><span class="pre">is_end_of_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.exceptions.ServerError.is_end_of_message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerError.description">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#dcpmessage.exceptions.ServerError.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerError.parse">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.exceptions.ServerError.parse" title="Link to this definition"></a></dt>
+<dd><p>Parse ServerError from error_string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> – bytes response returned from server</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>object of ServerError class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ServerError.raise_exception">
+<span class="sig-name descname"><span class="pre">raise_exception</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.exceptions.ServerError.raise_exception" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.ProtocolError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ProtocolError</span></span><a class="headerlink" href="#dcpmessage.exceptions.ProtocolError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="dcpmessage.exceptions.LddsMessageError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LddsMessageError</span></span><a class="headerlink" href="#dcpmessage.exceptions.LddsMessageError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-dcpmessage.ldds_client">
+<span id="dcpmessage-ldds-client-module"></span><h2>dcpmessage.ldds_client module<a class="headerlink" href="#module-dcpmessage.ldds_client" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.TlsMode">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TlsMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.TlsMode" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum representing levels of Transport Layer Security (TLS) to apply during the connection to the server.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.TlsMode.DISABLED">
+<span class="sig-name descname"><span class="pre">DISABLED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#dcpmessage.ldds_client.TlsMode.DISABLED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.TlsMode.OPTIONAL_STARTTLS">
+<span class="sig-name descname"><span class="pre">OPTIONAL_STARTTLS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#dcpmessage.ldds_client.TlsMode.OPTIONAL_STARTTLS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.TlsMode.REQUIRED_STARTTLS">
+<span class="sig-name descname"><span class="pre">REQUIRED_STARTTLS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#dcpmessage.ldds_client.TlsMode.REQUIRED_STARTTLS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.TlsMode.IMMEDIATE_TLS">
+<span class="sig-name descname"><span class="pre">IMMEDIATE_TLS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#dcpmessage.ldds_client.TlsMode.IMMEDIATE_TLS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LddsClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dcpmessage.ldds_client.TlsMode" title="dcpmessage.ldds_client.TlsMode"><span class="pre">TlsMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssl_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SSLContext</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A client for communicating with an LDDS (Low Data Rate Demodulation System) server.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.connect" title="Link to this definition"></a></dt>
+<dd><p>Establish a socket connection to the server using the provided host and port.
+Sets the socket to blocking mode and applies the specified timeout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>IOError</strong> – If the connection attempt times out or fails for any reason.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.disconnect" title="Link to this definition"></a></dt>
+<dd><p>Close the established socket connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.send_data">
+<span class="sig-name descname"><span class="pre">send_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.send_data" title="Link to this definition"></a></dt>
+<dd><p>Send data over the established socket connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – The byte data to send over the socket.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IOError</strong> – If the socket is not connected.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.receive_data">
+<span class="sig-name descname"><span class="pre">receive_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1024</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.receive_data" title="Link to this definition"></a></dt>
+<dd><p>Receive data from the socket.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buffer_size</strong> – The size of the buffer to use when receiving data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The received byte data.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>IOError</strong> – If the socket is not connected.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.authenticate_user">
+<span class="sig-name descname"><span class="pre">authenticate_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.authenticate_user" title="Link to this definition"></a></dt>
+<dd><p>Authenticate a user with the LDDS server using the provided username and password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_name</strong> – The username to authenticate with.</p></li>
+<li><p><strong>password</strong> – The password to authenticate with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If authentication fails.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.request_dcp_message">
+<span class="sig-name descname"><span class="pre">request_dcp_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytearray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dcpmessage.ldds_message.LddsMessage" title="dcpmessage.ldds_message.LddsMessage"><span class="pre">LddsMessage</span></a></span></span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.request_dcp_message" title="Link to this definition"></a></dt>
+<dd><p>Request a DCP (Data Collection Platform) message from the LDDS server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_id</strong> – The ID of the message to request.</p></li>
+<li><p><strong>message_data</strong> – The data to include in the message request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the server as bytes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.send_search_criteria">
+<span class="sig-name descname"><span class="pre">send_search_criteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_criteria</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dcpmessage.search_criteria.SearchCriteria" title="dcpmessage.search_criteria.SearchCriteria"><span class="pre">SearchCriteria</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.send_search_criteria" title="Link to this definition"></a></dt>
+<dd><p>Send search criteria to the LDDS server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>search_criteria</strong> – The search criteria to send.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.request_dcp_blocks">
+<span class="sig-name descname"><span class="pre">request_dcp_blocks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dcpmessage.ldds_message.LddsMessage" title="dcpmessage.ldds_message.LddsMessage"><span class="pre">LddsMessage</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.request_dcp_blocks" title="Link to this definition"></a></dt>
+<dd><p>Request a block of DCP messages from the LDDS server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The received DCP block as bytearray.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_client.LddsClient.send_goodbye">
+<span class="sig-name descname"><span class="pre">send_goodbye</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_client.LddsClient.send_goodbye" title="Link to this definition"></a></dt>
+<dd><p>Send a goodbye message to the LDDS server to terminate the session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dcpmessage.ldds_message">
+<span id="dcpmessage-ldds-message-module"></span><h2>dcpmessage.ldds_message module<a class="headerlink" href="#module-dcpmessage.ldds_message" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageConstants">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LddsMessageConstants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">VALID_HEADER_LENGTH</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SYNC_LENGTH</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">VALID_SYNC_CODE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'FAF0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MAX_DATA_LENGTH</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">99000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">VALID_IDS</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">frozenset</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">frozenset({'a',</span> <span class="pre">'b',</span> <span class="pre">'c',</span> <span class="pre">'d',</span> <span class="pre">'e',</span> <span class="pre">'f',</span> <span class="pre">'g',</span> <span class="pre">'h',</span> <span class="pre">'i',</span> <span class="pre">'j',</span> <span class="pre">'k',</span> <span class="pre">'l',</span> <span class="pre">'m',</span> <span class="pre">'n',</span> <span class="pre">'o',</span> <span class="pre">'p',</span> <span class="pre">'q',</span> <span class="pre">'r',</span> <span class="pre">'s',</span> <span class="pre">'t',</span> <span class="pre">'u'})</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageConstants" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Constants related to LDDS messages.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageConstants.VALID_HEADER_LENGTH">
+<span class="sig-name descname"><span class="pre">VALID_HEADER_LENGTH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageConstants.VALID_HEADER_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageConstants.SYNC_LENGTH">
+<span class="sig-name descname"><span class="pre">SYNC_LENGTH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageConstants.SYNC_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageConstants.VALID_SYNC_CODE">
+<span class="sig-name descname"><span class="pre">VALID_SYNC_CODE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'FAF0'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageConstants.VALID_SYNC_CODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageConstants.MAX_DATA_LENGTH">
+<span class="sig-name descname"><span class="pre">MAX_DATA_LENGTH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">99000</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageConstants.MAX_DATA_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageConstants.VALID_IDS">
+<span class="sig-name descname"><span class="pre">VALID_IDS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">frozenset</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">frozenset({'a',</span> <span class="pre">'b',</span> <span class="pre">'c',</span> <span class="pre">'d',</span> <span class="pre">'e',</span> <span class="pre">'f',</span> <span class="pre">'g',</span> <span class="pre">'h',</span> <span class="pre">'i',</span> <span class="pre">'j',</span> <span class="pre">'k',</span> <span class="pre">'l',</span> <span class="pre">'m',</span> <span class="pre">'n',</span> <span class="pre">'o',</span> <span class="pre">'p',</span> <span class="pre">'q',</span> <span class="pre">'r',</span> <span class="pre">'s',</span> <span class="pre">'t',</span> <span class="pre">'u'})</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageConstants.VALID_IDS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LddsMessageIds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hello</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'a'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">goodbye</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'b'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'e'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dcp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'f'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_criteria</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'g'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_outages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'h'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'i'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">put_netlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'j'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_netlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'k'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assert_outages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'l'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_hello</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'m'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dcp_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'n'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'o'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ret_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'p'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inst_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dcp_block_ext</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unused_6</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_tls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'t'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'u'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Ids associated with LDDS messages.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.hello">
+<span class="sig-name descname"><span class="pre">hello</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'a'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.hello" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.goodbye">
+<span class="sig-name descname"><span class="pre">goodbye</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'b'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.goodbye" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'c'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.status" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.start">
+<span class="sig-name descname"><span class="pre">start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'d'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'e'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.dcp">
+<span class="sig-name descname"><span class="pre">dcp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'f'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.dcp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.search_criteria">
+<span class="sig-name descname"><span class="pre">search_criteria</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'g'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.search_criteria" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.get_outages">
+<span class="sig-name descname"><span class="pre">get_outages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'h'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.get_outages" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.idle">
+<span class="sig-name descname"><span class="pre">idle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'i'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.idle" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.put_netlist">
+<span class="sig-name descname"><span class="pre">put_netlist</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'j'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.put_netlist" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.get_netlist">
+<span class="sig-name descname"><span class="pre">get_netlist</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'k'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.get_netlist" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.assert_outages">
+<span class="sig-name descname"><span class="pre">assert_outages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'l'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.assert_outages" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.auth_hello">
+<span class="sig-name descname"><span class="pre">auth_hello</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.auth_hello" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.dcp_block">
+<span class="sig-name descname"><span class="pre">dcp_block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'n'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.dcp_block" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.events">
+<span class="sig-name descname"><span class="pre">events</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'o'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.events" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.ret_config">
+<span class="sig-name descname"><span class="pre">ret_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'p'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.ret_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.inst_config">
+<span class="sig-name descname"><span class="pre">inst_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'q'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.inst_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.dcp_block_ext">
+<span class="sig-name descname"><span class="pre">dcp_block_ext</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'r'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.dcp_block_ext" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.unused_6">
+<span class="sig-name descname"><span class="pre">unused_6</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'s'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.unused_6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.start_tls">
+<span class="sig-name descname"><span class="pre">start_tls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'t'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.start_tls" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessageIds.user">
+<span class="sig-name descname"><span class="pre">user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'u'</span></em><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessageIds.user" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LddsMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.check_server_errors">
+<span class="sig-name descname"><span class="pre">check_server_errors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.check_server_errors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.check_other_errors">
+<span class="sig-name descname"><span class="pre">check_other_errors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.check_other_errors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.parse">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.parse" title="Link to this definition"></a></dt>
+<dd><p>Parse bytes into an LddsMessage instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> – The message in bytes to parse.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing an LddsMessage instance and a ServerError if any.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dcpmessage.exceptions.ProtocolError" title="dcpmessage.exceptions.ProtocolError"><strong>ProtocolError</strong></a> – If there is an issue with the message header.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.get_message_length">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_message_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.get_message_length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.get_total_length">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_total_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.get_total_length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.create">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.create" title="Link to this definition"></a></dt>
+<dd><p>Create a LDDS message from scratch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_id</strong> – The ID of the message.</p></li>
+<li><p><strong>message_data</strong> – The data of the message in bytes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new LddsMessage instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.to_bytes">
+<span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.to_bytes" title="Link to this definition"></a></dt>
+<dd><p>Convert the LDDS message to bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The message in bytes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.is_end_of_message">
+<span class="sig-name descname"><span class="pre">is_end_of_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.is_end_of_message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.ldds_message.LddsMessage.is_success">
+<span class="sig-name descname"><span class="pre">is_success</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.ldds_message.LddsMessage.is_success" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dcpmessage.search_criteria">
+<span id="dcpmessage-search-criteria-module"></span><h2>dcpmessage.search_criteria module<a class="headerlink" href="#module-dcpmessage.search_criteria" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.DcpMessageSource">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DcpMessageSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.search_criteria.DcpMessageSource" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration for DCP message sources with unique values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOES</strong> – Represents a standard GOES message source.</p></li>
+<li><p><strong>GOES_SELFTIMED</strong> – Represents a self-timed GOES message source.</p></li>
+<li><p><strong>GOES_RANDOM</strong> – Represents a random GOES message source.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.DcpMessageSource.GOES">
+<span class="sig-name descname"><span class="pre">GOES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#dcpmessage.search_criteria.DcpMessageSource.GOES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.DcpMessageSource.GOES_SELFTIMED">
+<span class="sig-name descname"><span class="pre">GOES_SELFTIMED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">65536</span></em><a class="headerlink" href="#dcpmessage.search_criteria.DcpMessageSource.GOES_SELFTIMED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.DcpMessageSource.GOES_RANDOM">
+<span class="sig-name descname"><span class="pre">GOES_RANDOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">131072</span></em><a class="headerlink" href="#dcpmessage.search_criteria.DcpMessageSource.GOES_RANDOM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.SearchCriteriaConstants">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SearchCriteriaConstants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.search_criteria.SearchCriteriaConstants" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Constants used in SearchCriteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>max_sources</strong> – The maximum number of sources that can be added to the search criteria.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.SearchCriteriaConstants.max_sources">
+<span class="sig-name descname"><span class="pre">max_sources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#dcpmessage.search_criteria.SearchCriteriaConstants.max_sources" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.DcpAddress">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DcpAddress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.search_criteria.DcpAddress" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing a DCP address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> – (str) The DCP address, which must be 8 characters long.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.SearchCriteria">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SearchCriteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lrgs_since</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lrgs_until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dcp_address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dcpmessage.search_criteria.DcpAddress" title="dcpmessage.search_criteria.DcpAddress"><span class="pre">DcpAddress</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.search_criteria.SearchCriteria" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.SearchCriteria.from_file">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dcpmessage.search_criteria.SearchCriteria" title="dcpmessage.search_criteria.SearchCriteria"><span class="pre">SearchCriteria</span></a></span></span><a class="headerlink" href="#dcpmessage.search_criteria.SearchCriteria.from_file" title="Link to this definition"></a></dt>
+<dd><p>Create a SearchCriteria object from a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> – Path to the JSON file containing search criteria.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A SearchCriteria object.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If there is an issue parsing the JSON file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.search_criteria.SearchCriteria.from_dict">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dcpmessage.search_criteria.SearchCriteria" title="dcpmessage.search_criteria.SearchCriteria"><span class="pre">SearchCriteria</span></a></span></span><a class="headerlink" href="#dcpmessage.search_criteria.SearchCriteria.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create a SearchCriteria object from a dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – dict containing search criteria data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A SearchCriteria object.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If there is an issue parsing the JSON file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dcpmessage.utils">
+<span id="dcpmessage-utils-module"></span><h2>dcpmessage.utils module<a class="headerlink" href="#module-dcpmessage.utils" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dcpmessage.utils.ByteUtil">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ByteUtil</span></span><a class="headerlink" href="#dcpmessage.utils.ByteUtil" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.utils.ByteUtil.extract_string">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytearray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#dcpmessage.utils.ByteUtil.extract_string" title="Link to this definition"></a></dt>
+<dd><p>Pull a null-terminated string out of a byte array starting at given offset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>b</strong> – The byte array to extract string from.</p></li>
+<li><p><strong>offset</strong> – The offset to start reading from. Default is 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The extracted string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dcpmessage.utils.ByteUtil.to_hex_string">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">to_hex_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytearray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dcpmessage.utils.ByteUtil.to_hex_string" title="Link to this definition"></a></dt>
+<dd><p>Convert byte array to hex string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>b</strong> – The byte array to convert to hex string.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Hex string of byte array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dcpmessage">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dcpmessage" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="dcpmessage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, dcpmessage Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
