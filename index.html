@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="dcpmessage" href="modules.html" /> 
+    <link rel="next" title="Installation" href="installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,6 +44,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_criteria.html">Search Criteria</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">dcpmessage</a></li>
 </ul>
 
@@ -72,143 +75,75 @@
              
   <section id="dcpmessage">
 <h1>dcpmessage<a class="headerlink" href="#dcpmessage" title="Link to this heading"></a></h1>
-<section id="dcpmessage">
-<h2>dcpmessage<a class="headerlink" href="#dcpmessage" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">dcpmessage</span></code> is a lightweight Python library for retrieving <strong>GOES DCS messages</strong> from <strong>LRGS servers</strong> using defined
+<p>dcpmessage is a lightweight Python library for retrieving <strong>GOES DCS messages</strong> from <strong>LRGS servers</strong> using defined
 search criteria. It was originally developed for deployment as an AWS Lambda function for periodic message retrieval
 from specified Data Collection Platforms (DCPs).</p>
-<blockquote>
-<div><p>🔹 Note: This package only retrieves DCP messages. Decoding, processing, or archiving must be handled externally.</p>
-</div></blockquote>
-<section id="installation">
-<h3>🚀 Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h3>
-<p>You can install the package from <a class="reference external" href="https://pypi.org/project/dcpmessage/">PyPI</a> using <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <a class="reference external" href="https://docs.astral.sh/uv/concepts/projects/dependencies/">
-<code class="docutils literal notranslate"><span class="pre">uv</span></code></a>.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># using pip</span>
-pip<span class="w"> </span>install<span class="w"> </span>dcpmessage
-</pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>🔹 This package only retrieves DCP messages. Decoding, processing, or archiving must be handled externally.</p>
 </div>
-<p>OR</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># using uv</span>
-uv<span class="w"> </span>add<span class="w"> </span>dcpmessage
-</pre></div>
-</div>
-</section>
-<section id="usage">
-<h3>🧪 Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h3>
-<p>The script below demonstrates an example of using <code class="docutils literal notranslate"><span class="pre">dcpmessage</span></code>.</p>
-<section id="example-script">
-<h4>Example Script<a class="headerlink" href="#example-script" title="Link to this heading"></a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">dcpmessage.dcp_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">DcpMessage</span>
-
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
-    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
-    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;[</span><span class="si">%(levelname)s</span><span class="s1">]</span><span class="se">\t</span><span class="si">%(asctime)s</span><span class="se">\t</span><span class="s1">[</span><span class="si">%(pathname)s</span><span class="s1">]</span><span class="se">\t</span><span class="s1">[</span><span class="si">%(lineno)s</span><span class="s1">]</span><span class="se">\t</span><span class="s1">&quot;</span><span class="si">%(message)s</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
-    <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S%z&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">messages</span> <span class="o">=</span> <span class="n">DcpMessage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="n">username</span><span class="o">=</span><span class="s2">&quot;&lt;USERNAME&gt;&quot;</span><span class="p">,</span>  <span class="c1"># &lt;-- your NOAA LRGS username</span>
-        <span class="n">password</span><span class="o">=</span><span class="s2">&quot;&lt;PASSWORD&gt;&quot;</span><span class="p">,</span>  <span class="c1"># &lt;-- your NOAA LRGS password</span>
-        <span class="n">search_criteria</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;DRS_SINCE&quot;</span><span class="p">:</span> <span class="s2">&quot;now - 2 hour&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;DRS_UNTIL&quot;</span><span class="p">:</span> <span class="s2">&quot;now&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;SOURCE&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;GOES_SELFTIMED&quot;</span><span class="p">,</span> <span class="s2">&quot;GOES_RANDOM&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;DCP_ADDRESS&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&lt;DCP ADDRESS&gt;&quot;</span><span class="p">],</span>  <span class="c1"># &lt;-- your DCP addresses</span>
-        <span class="p">},</span>
-        <span class="n">host</span><span class="o">=</span><span class="s2">&quot;cdadata.wcda.noaa.gov&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="quick-test-with-uv">
-<h4>🔧 Quick Test with <code class="docutils literal notranslate"><span class="pre">uv</span></code><a class="headerlink" href="#quick-test-with-uv" title="Link to this heading"></a></h4>
-<p>To quickly install <code class="docutils literal notranslate"><span class="pre">dcpmessage</span></code> in a temporary environment with <code class="docutils literal notranslate"><span class="pre">uv</span></code> and run the script above, follow these steps:</p>
-<ol class="arabic">
-<li><p>Install <code class="docutils literal notranslate"><span class="pre">uv</span></code> - refer to the <code class="docutils literal notranslate"><span class="pre">uv</span></code> <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">website</a>.</p></li>
-<li><p>Copy the example script above to create <code class="docutils literal notranslate"><span class="pre">main.py</span></code> script</p>
-<blockquote>
-<div><p>🔐 Replace <code class="docutils literal notranslate"><span class="pre">&lt;USERNAME&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;PASSWORD&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;DCP</span> <span class="pre">ADDRESS&gt;</span></code> with your actual NOAA LRGS credentials and DCP address.</p>
-</div></blockquote>
-</li>
-<li><p>Run the script using <code class="docutils literal notranslate"><span class="pre">uv</span></code></p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>--with<span class="w"> </span>dcpmessage<span class="w"> </span>./main.py
-</pre></div>
-</div>
-</section>
-</section>
-<section id="search-criteria">
-<h3>📁 Search Criteria<a class="headerlink" href="#search-criteria" title="Link to this heading"></a></h3>
-<p>Search Criteria should be provided to retrieve messages for specified DCPs. Search criteria can be passed either as the
-path to the search criteria json file or a dict. An
-example is provided below.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;DRS_SINCE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;now - 1 hour&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;DRS_UNTIL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;now&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;SOURCE&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;GOES_SELFTIMED&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;GOES_RANDOM&quot;</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;DCP_ADDRESS&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;address1&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;address2&quot;</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<section id="supported-fields">
-<h4>🔍 Supported Fields<a class="headerlink" href="#supported-fields" title="Link to this heading"></a></h4>
-<p>Only the following search criteria keys are currently supported:</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Key</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DRS_SINCE</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
-<td><p>Start time for data query (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;now</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">hour&quot;</span></code>)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DRS_UNTIL</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
-<td><p>End time for data query (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;now&quot;</span></code>)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SOURCE</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">list[string]</span></code></p></td>
-<td><p>Must be one or both of: <code class="docutils literal notranslate"><span class="pre">&quot;GOES_SELFTIMED&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;GOES_RANDOM&quot;</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DCP_ADDRESS</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">list[string]</span></code></p></td>
-<td><p>One or more DCP addresses to query</p></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<div><p>⚠️ All other keys in the criteria file will be ignored. For detailed information on the search criteria format, see
-the
-<a class="reference external" href="https://opendcs-env.readthedocs.io/en/stable/legacy-lrgs-userguide.html#search-criteria-file-format">opendcs docs</a>.</p>
-</div></blockquote>
-</section>
-</section>
-<section id="contributors">
-<h3>👥 Contributors<a class="headerlink" href="#contributors" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/orgs/dcspy/people/manojkotteda">Manoj Kotteda</a></p></li>
-<li><p>Darshan Baral</p></li>
-</ul>
-</section>
-</section>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#example-script">Example Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#quick-test-with-uv">Quick Test with uv</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="search_criteria.html">Search Criteria</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="search_criteria.html#supported-fields">Supported Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">dcpmessage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dcpmessage.html">dcpmessage package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage.credentials">dcpmessage.credentials module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.credentials.HashAlgo"><code class="docutils literal notranslate"><span class="pre">HashAlgo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.credentials.Sha1"><code class="docutils literal notranslate"><span class="pre">Sha1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.credentials.Sha256"><code class="docutils literal notranslate"><span class="pre">Sha256</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.credentials.Credentials"><code class="docutils literal notranslate"><span class="pre">Credentials</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage.dcp_message">dcpmessage.dcp_message module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.dcp_message.DcpMessage"><code class="docutils literal notranslate"><span class="pre">DcpMessage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage.exceptions">dcpmessage.exceptions module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.exceptions.ServerErrorCode"><code class="docutils literal notranslate"><span class="pre">ServerErrorCode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.exceptions.ServerError"><code class="docutils literal notranslate"><span class="pre">ServerError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.exceptions.ProtocolError"><code class="docutils literal notranslate"><span class="pre">ProtocolError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.exceptions.LddsMessageError"><code class="docutils literal notranslate"><span class="pre">LddsMessageError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage.ldds_client">dcpmessage.ldds_client module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.ldds_client.TlsMode"><code class="docutils literal notranslate"><span class="pre">TlsMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.ldds_client.LddsClient"><code class="docutils literal notranslate"><span class="pre">LddsClient</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage.ldds_message">dcpmessage.ldds_message module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.ldds_message.LddsMessageConstants"><code class="docutils literal notranslate"><span class="pre">LddsMessageConstants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.ldds_message.LddsMessageIds"><code class="docutils literal notranslate"><span class="pre">LddsMessageIds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.ldds_message.LddsMessage"><code class="docutils literal notranslate"><span class="pre">LddsMessage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage.search_criteria">dcpmessage.search_criteria module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.search_criteria.DcpMessageSource"><code class="docutils literal notranslate"><span class="pre">DcpMessageSource</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.search_criteria.SearchCriteriaConstants"><code class="docutils literal notranslate"><span class="pre">SearchCriteriaConstants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.search_criteria.DcpAddress"><code class="docutils literal notranslate"><span class="pre">DcpAddress</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.search_criteria.SearchCriteria"><code class="docutils literal notranslate"><span class="pre">SearchCriteria</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage.utils">dcpmessage.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dcpmessage.html#dcpmessage.utils.ByteUtil"><code class="docutils literal notranslate"><span class="pre">ByteUtil</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dcpmessage.html#module-dcpmessage">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 
@@ -216,7 +151,7 @@ the
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-right" title="dcpmessage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
