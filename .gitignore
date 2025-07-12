@@ -19,7 +19,7 @@ build/
 
 # Documentation builds
 docs/_build/
-docs/dcpmessage.rst
+docs/dcpmessage*.rst
 docs/modules.rst
 
 # Credentials and sensitive data

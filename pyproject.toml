@@ -13,7 +13,6 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "myst-parser>=4.0.1",
     "setuptools>=78.1.0",
     "sphinx>=8.2.3",
     "sphinx-rtd-theme>=3.0.2",

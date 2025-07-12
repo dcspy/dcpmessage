@@ -15,8 +15,8 @@ class DcpMessage:
     Class for handling DCP messages, including fetching and processing them
     from a remote server using the LDDS protocol.
 
-    :param: DATA_LENGTH: Standard length of the data field in a DCP message.
-    :param: HEADER_LENGTH: Standard length of the header in a DCP message.
+    :param DATA_LENGTH: Standard length of the data field in a DCP message.
+    :param HEADER_LENGTH: Standard length of the header in a DCP message.
     """
 
     DATA_LENGTH = 32

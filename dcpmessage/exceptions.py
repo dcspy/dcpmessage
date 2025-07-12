@@ -9,7 +9,7 @@ class ServerErrorCode(Enum):
     Enum for server error codes, each with a numeric value and description.
 
     Each member has:
-    
+
     - A unique numeric value (int)
     - A human-readable description (str), accessible via `.description`
     """
@@ -91,7 +91,7 @@ class ServerErrorCode(Enum):
 
         :return: Human-readable description.
         """
-             
+
         return self.__description
 
 
