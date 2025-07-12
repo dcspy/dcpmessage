@@ -5,6 +5,15 @@ from .utils import ByteUtil
 
 @verify(UNIQUE)
 class ServerErrorCode(Enum):
+    """
+    Enum for server error codes, each with a numeric value and description.
+
+    Each member has:
+    
+    - A unique numeric value (int)
+    - A human-readable description (str), accessible via `.description`
+    """
+
     DSUCCESS = 0, "Success."
     DNOFLAG = 1, "Could not find start of message flag."
     DDUMMY = 2, "Message found (and loaded) but it's a dummy."
@@ -77,6 +86,12 @@ class ServerErrorCode(Enum):
 
     @property
     def description(self):
+        """
+        Returns the description of the error code.
+
+        :return: Human-readable description.
+        """
+             
         return self.__description
 
 

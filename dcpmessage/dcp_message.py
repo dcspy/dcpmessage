@@ -15,7 +15,7 @@ class DcpMessage:
     Class for handling DCP messages, including fetching and processing them
     from a remote server using the LDDS protocol.
 
-    :param DATA_LENGTH: Standard length of the data field in a DCP message.
+    :param: DATA_LENGTH: Standard length of the data field in a DCP message.
     :param: HEADER_LENGTH: Standard length of the header in a DCP message.
     """
 
@@ -48,10 +48,11 @@ class DcpMessage:
             Will be passed to `socket.settimeout <https://docs.python.org/3/library/socket.html#socket.socket.settimeout>`_
         :param tls_mode: TLS configuration level for the connection (default: 1 - DISABLED).
             Must be one of the following values from the `TlsMode` enum:
-                * 1: Do not use TLS.
-                * 2: Try to upgrade to TLS via STARTTLS. Continue without TLS if upgrade fails.
-                * 3: Try to upgrade via STARTTLS. Fail if TLS cannot be established.
-                * 4: Require full TLS before any communication begins.
+
+            * 1: Do not use TLS.
+            * 2: Try to upgrade to TLS via STARTTLS. Continue without TLS if upgrade fails.
+            * 3: Try to upgrade via STARTTLS. Fail if TLS cannot be established.
+            * 4: Require full TLS before any communication begins.
         :return: List of DCP messages retrieved from the server.
         :raises ValueError: If `tls_mode` is not valid value.
         :raises TypeError: If `search_criteria` is not a valid type (dict, str, or Path).

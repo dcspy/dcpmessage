@@ -44,14 +44,6 @@ dcpmessage.ldds\_message module
    :show-inheritance:
    :undoc-members:
 
-dcpmessage.logs module
-----------------------
-
-.. automodule:: dcpmessage.logs
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 dcpmessage.search\_criteria module
 ----------------------------------
 
