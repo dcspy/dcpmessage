@@ -6,9 +6,7 @@
 
 ## Documentation
 
-For usage instructions and API reference, go to the documentation website: https://dcspy.github.io/dcpmessage
-
-➡️ dcpmessage Documentation
+For usage instructions and API reference, go to the documentation website: https://dcspy.github.io/dcpmessage.
 
 ## 👥 Contributors
 
