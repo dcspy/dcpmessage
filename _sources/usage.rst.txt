@@ -8,6 +8,8 @@ The script below demonstrates an example of using ``dcpmessage``.
 Example Script
 ##############
 
+The :ref:`DcpMessage` can be used to get messages from LRGS server.
+
 .. code-block:: python
 
     # main.py
