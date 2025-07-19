@@ -26,9 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install sphinx sphinx_rtd_theme
 
-      - name: Generate API docs (sphinx-apidoc)
-        run: |
-          sphinx-apidoc -o docs/ dcpmessage/
+      # - name: Generate API docs (sphinx-apidoc)
+      #   run: |
+      #     sphinx-apidoc -o docs/ dcpmessage/
 
       - name: Build documentation
         run: |

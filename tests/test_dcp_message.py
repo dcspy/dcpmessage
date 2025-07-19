@@ -15,7 +15,7 @@ class TestDcpMessage(unittest.TestCase):
                 b"A081B07E24204144853G30-0HN096WUP00012`BST@KY@KYg ",
             )
         ]
-        dcp_messages = DcpMessage.explode(message_block)
+        dcp_messages = DcpMessage._explode(message_block)
         self.assertEqual(
             dcp_messages,
             [

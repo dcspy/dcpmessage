@@ -14,4 +14,4 @@ from specified Data Collection Platforms (DCPs).
     installation
     usage
     search_criteria
-    modules
+    dcp_message
