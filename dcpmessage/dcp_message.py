@@ -35,11 +35,11 @@ class DcpMessage:
 
         :param username: Username for server authentication.
         :param password: Password for server authentication.
-        :param search_criteria: Filepath to search criteria or search criteria as a string.
-        :param host: Hostname or IP address of the server.
+        :param search_criteria: :ref:`SearchCriteria` as a filepath or as a dict.
+        :param host: Hostname or IP address of the server. Potentially one of the `NOAA servers <https://dcs1.noaa.gov/lrgs/LrgsSummaryStatus.html>`_.
         :param port: Port number for server connection (default: ``16003``).
         :param timeout: Connection timeout in seconds (default: ``30`` seconds).
-            Will be passed to `socket.settimeout <https://docs.python.org/3/library/socket.html#socket.socket.settimeout>`_
+            Will be passed to `socket.settimeout <https://docs.python.org/3/library/socket.html#socket.socket.settimeout>`_.
         :param tls_mode: TLS configuration level for the connection (default: ``1`` - DISABLED).
             Must be one of the following values:
 

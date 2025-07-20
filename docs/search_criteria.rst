@@ -1,9 +1,12 @@
+.. _SearchCriteria:
+
 Search Criteria
 ---------------
 
 Search Criteria should be provided to retrieve messages for specified DCPs. Search criteria can be passed either as the
 path to the search criteria json file or a dict. An
-example is provided below.
+example is provided below. For detailed information on the search criteria format, see the
+`opendcs docs <https://opendcs-env.readthedocs.io/en/stable/legacy-lrgs-userguide.html#search-criteria-file-format>`_.
 
 .. code-block:: json
 
@@ -23,7 +26,7 @@ example is provided below.
 Supported Fields
 ################
 
-Only the following search criteria keys are currently supported:
+.. warning:: Only the following search criteria keys are currently supported. All other keys in the criteria file will be ignored.
 
 .. list-table::
    :widths: 20 20 60
@@ -44,6 +47,3 @@ Only the following search criteria keys are currently supported:
    * - ``DCP_ADDRESS``
      - ``list[string]``
      - One or more DCP addresses to query
-
-.. warning:: ⚠️ All other keys in the criteria file will be ignored. For detailed information on the search criteria format, see
-   the `opendcs docs <https://opendcs-env.readthedocs.io/en/stable/legacy-lrgs-userguide.html#search-criteria-file-format>`_.

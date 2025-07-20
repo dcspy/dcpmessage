@@ -1,14 +1,16 @@
 Usage
 -----
 
-The script below demonstrates an example of using ``dcpmessage``.
+The :ref:`DcpMessage` can be used to get messages from LRGS server.
 
 .. _example-script:
 
 Example Script
 ##############
 
-The :ref:`DcpMessage` can be used to get messages from LRGS server.
+The script below demonstrates an example of using ``dcpmessage``.
+
+.. warning:: Replace ``<USERNAME>``, ``<PASSWORD>``, and ``<DCP ADDRESS>`` with your actual NOAA LRGS credentials and DCP address.
 
 .. code-block:: python
 
@@ -38,8 +40,6 @@ The :ref:`DcpMessage` can be used to get messages from LRGS server.
 
         for message in messages:
             print(message)
-
-.. warning:: 🔐 Replace ``<USERNAME>``, ``<PASSWORD>``, and ``<DCP ADDRESS>`` with your actual NOAA LRGS credentials and DCP address.
 
 Quick Test with uv
 ##################
