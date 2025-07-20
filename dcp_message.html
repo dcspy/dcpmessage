@@ -99,11 +99,11 @@ finally disconnecting.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>username</strong> – Username for server authentication.</p></li>
 <li><p><strong>password</strong> – Password for server authentication.</p></li>
-<li><p><strong>search_criteria</strong> – Filepath to search criteria or search criteria as a string.</p></li>
-<li><p><strong>host</strong> – Hostname or IP address of the server.</p></li>
+<li><p><strong>search_criteria</strong> – <a class="reference internal" href="search_criteria.html#searchcriteria"><span class="std std-ref">Search Criteria</span></a> as a filepath or as a dict.</p></li>
+<li><p><strong>host</strong> – Hostname or IP address of the server. Potentially one of the <a class="reference external" href="https://dcs1.noaa.gov/lrgs/LrgsSummaryStatus.html">NOAA servers</a>.</p></li>
 <li><p><strong>port</strong> – Port number for server connection (default: <code class="docutils literal notranslate"><span class="pre">16003</span></code>).</p></li>
 <li><p><strong>timeout</strong> – Connection timeout in seconds (default: <code class="docutils literal notranslate"><span class="pre">30</span></code> seconds).
-Will be passed to <a class="reference external" href="https://docs.python.org/3/library/socket.html#socket.socket.settimeout">socket.settimeout</a></p></li>
+Will be passed to <a class="reference external" href="https://docs.python.org/3/library/socket.html#socket.socket.settimeout">socket.settimeout</a>.</p></li>
 <li><p><strong>tls_mode</strong> – <p>TLS configuration level for the connection (default: <code class="docutils literal notranslate"><span class="pre">1</span></code> - DISABLED).
 Must be one of the following values:</p>
 <ul>

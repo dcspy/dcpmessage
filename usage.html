@@ -80,10 +80,14 @@
              
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
-<p>The script below demonstrates an example of using <code class="docutils literal notranslate"><span class="pre">dcpmessage</span></code>.</p>
+<p>The <a class="reference internal" href="dcp_message.html#dcpmessage"><span class="std std-ref">DcpMessage Class</span></a> can be used to get messages from LRGS server.</p>
 <section id="example-script">
 <span id="id1"></span><h2>Example Script<a class="headerlink" href="#example-script" title="Link to this heading"></a></h2>
-<p>The <a class="reference internal" href="dcp_message.html#dcpmessage"><span class="std std-ref">DcpMessage Class</span></a> can be used to get messages from LRGS server.</p>
+<p>The script below demonstrates an example of using <code class="docutils literal notranslate"><span class="pre">dcpmessage</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;USERNAME&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;PASSWORD&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;DCP</span> <span class="pre">ADDRESS&gt;</span></code> with your actual NOAA LRGS credentials and DCP address.</p>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
@@ -111,10 +115,6 @@
     <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 </pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>🔐 Replace <code class="docutils literal notranslate"><span class="pre">&lt;USERNAME&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;PASSWORD&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;DCP</span> <span class="pre">ADDRESS&gt;</span></code> with your actual NOAA LRGS credentials and DCP address.</p>
 </div>
 </section>
 <section id="quick-test-with-uv">

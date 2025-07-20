@@ -78,10 +78,11 @@
            <div itemprop="articleBody">
              
   <section id="search-criteria">
-<h1>Search Criteria<a class="headerlink" href="#search-criteria" title="Link to this heading"></a></h1>
+<span id="searchcriteria"></span><h1>Search Criteria<a class="headerlink" href="#search-criteria" title="Link to this heading"></a></h1>
 <p>Search Criteria should be provided to retrieve messages for specified DCPs. Search criteria can be passed either as the
 path to the search criteria json file or a dict. An
-example is provided below.</p>
+example is provided below. For detailed information on the search criteria format, see the
+<a class="reference external" href="https://opendcs-env.readthedocs.io/en/stable/legacy-lrgs-userguide.html#search-criteria-file-format">opendcs docs</a>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;DRS_SINCE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;now - 1 hour&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;DRS_UNTIL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;now&quot;</span><span class="p">,</span>
@@ -98,7 +99,10 @@ example is provided below.</p>
 </div>
 <section id="supported-fields">
 <h2>Supported Fields<a class="headerlink" href="#supported-fields" title="Link to this heading"></a></h2>
-<p>Only the following search criteria keys are currently supported:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only the following search criteria keys are currently supported. All other keys in the criteria file will be ignored.</p>
+</div>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 20.0%" />
@@ -130,11 +134,6 @@ example is provided below.</p>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>⚠️ All other keys in the criteria file will be ignored. For detailed information on the search criteria format, see
-the <a class="reference external" href="https://opendcs-env.readthedocs.io/en/stable/legacy-lrgs-userguide.html#search-criteria-file-format">opendcs docs</a>.</p>
-</div>
 </section>
 </section>
 
