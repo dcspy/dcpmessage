@@ -17,7 +17,7 @@ The script below demonstrates an example of using ``dcpmessage``.
     # main.py
     import logging
 
-    from dcpmessage.dcp_message import DcpMessage
+    from dcpmessage import DcpMessage
 
     logging.basicConfig(
         level=logging.INFO,
