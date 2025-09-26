@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from dcpmessage.ldds_client import (
     LddsClient,
     TlsMode,
-)  # Replace 'your_module' with actual module path
+)
 
 
 class TestLddsClientTimeout(unittest.TestCase):
@@ -149,4 +149,63 @@ class TestLddsClientTlsModes(unittest.TestCase):
             with self.assertRaises(IOError) as context:
                 client.connect()
 
-            self.assertIn("TLS upgrade required but failed", str(context.exception))
+            self.assertIn("Required TLS upgrade failed", str(context.exception))
+
+    @patch("dcpmessage.ldds_client.socket.socket")
+    def test_required_starttls_wrap_tls_failure(self, mock_socket_class):
+        mock_socket = MagicMock()
+        mock_socket_class.return_value = mock_socket
+
+        client = LddsClient(
+            self.host,
+            self.port,
+            self.timeout,
+            TlsMode.REQUIRED_STARTTLS,
+            self.ssl_context,
+        )
+
+        # Mock server saying "proceed"
+        with patch.object(client, "request_dcp_message") as mock_request:
+            mock_response = MagicMock()
+            mock_response.message_data = b"proceed"
+            mock_request.return_value = mock_response
+
+            # Make wrap_socket fail
+            self.ssl_context.wrap_socket.side_effect = Exception("TLS handshake failed")
+
+            with self.assertRaises(IOError) as context:
+                client.connect()
+
+            self.assertIn("Required TLS upgrade failed", str(context.exception))
+
+    @patch("dcpmessage.ldds_client.socket.socket")
+    def test_optional_starttls_wrap_tls_failure(self, mock_socket_class):
+        mock_socket = MagicMock()
+        mock_socket_class.return_value = mock_socket
+
+        client = LddsClient(
+            self.host,
+            self.port,
+            self.timeout,
+            TlsMode.OPTIONAL_STARTTLS,
+            self.ssl_context,
+        )
+
+        # Mock server saying "proceed"
+        with patch.object(client, "request_dcp_message") as mock_request:
+            mock_response = MagicMock()
+            mock_response.message_data = b"proceed"
+            mock_request.return_value = mock_response
+
+            # Fail first TLS attempt
+            self.ssl_context.wrap_socket.side_effect = Exception("TLS handshake failed")
+
+            # Spy on reconnect behavior
+            client.disconnect = MagicMock()
+            client.connect = MagicMock()
+
+            client._attempt_starttls_upgrade()
+
+            client.disconnect.assert_called_once()
+            client.connect.assert_called_once()
+            self.assertEqual(client.tls_mode, TlsMode.DISABLED)

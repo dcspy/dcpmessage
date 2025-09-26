@@ -138,8 +138,8 @@ class SearchCriteria:
             search_criteria = cls(lrgs_since, lrgs_until, dcp_addresses, sources)
             logger.debug(str(search_criteria))
             return search_criteria
-        except Exception as ex:
-            raise Exception(f"Unexpected exception parsing search-criteria: {ex}")
+        except Exception as e:
+            raise Exception("Unexpected exception parsing search-criteria") from e
 
     def __add_source(
         self,

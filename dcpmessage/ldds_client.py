@@ -6,7 +6,7 @@ from ssl import SSLContext
 from typing import Optional, Union
 
 from .credentials import Credentials, Sha1, Sha256
-from .ldds_message import LddsMessage, LddsMessageConstants, LddsMessageIds
+from .ldds_message import LddsMessage, LddsMessageIds
 from .search_criteria import SearchCriteria
 
 logger = logging.getLogger(__name__)
@@ -59,11 +59,11 @@ class LddsClient:
         self.port = port
         self.timeout = timeout
         self.socket = None
-        self.raw_socket = None
         self.tls_mode = tls_mode
         self.ssl_context = ssl_context
+        self._connection_attempts = 0
 
-    def connect(self):
+    def connect(self) -> None:
         """
         Establish a socket connection to the server using the provided host and port.
         Sets the socket to blocking mode and applies the specified timeout.
@@ -71,44 +71,70 @@ class LddsClient:
         :raises IOError: If the connection attempt times out or fails for any reason.
         :return: None
         """
+        if self._connection_attempts > 1:
+            raise IOError(
+                f"Failed to connect to {self.host}:{self.port} after 2 attempts"
+            )
+
+        self._connection_attempts += 1
         try:
             logger.info(f"Connecting to {self.host}:{self.port}")
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.settimeout(self.timeout)
             self.socket.connect((self.host, self.port))
-        except socket.timeout as ex:
-            raise IOError(f"Connection to {self.host}:{self.port} timed out") from ex
-        except socket.error as ex:
-            raise IOError(f"Cannot connect to {self.host}:{self.port}") from ex
+        except socket.timeout as e:
+            raise IOError(f"Connection to {self.host}:{self.port} timed out") from e
+        except socket.error as e:
+            raise IOError(f"Cannot connect to {self.host}:{self.port}") from e
 
+        self._handle_tls()
+
+    def _handle_tls(self):
         match self.tls_mode:
             case TlsMode.DISABLED:
-                pass
+                return
             case TlsMode.IMMEDIATE_TLS:
                 self._wrap_tls()
             case TlsMode.OPTIONAL_STARTTLS | TlsMode.REQUIRED_STARTTLS:
                 self._attempt_starttls_upgrade()
-        logger.info(f"Successfully connected to {self.host}:{self.port}")
 
     def _wrap_tls(self):
-        self.raw_socket = self.socket
-        self.socket = self.ssl_context.wrap_socket(
-            self.socket, server_hostname=self.host
-        )
+        try:
+            self.socket = self.ssl_context.wrap_socket(
+                self.socket, server_hostname=self.host
+            )
+            logger.info("TLS upgrade successful.")
+        except Exception as e:
+            logger.debug("wrap_socket failed.")
+            raise e
 
     def _attempt_starttls_upgrade(self):
         logger.info("Attempting STARTTLS upgrade.")
         msg = self.request_dcp_message(LddsMessageIds.start_tls)
 
-        if msg.message_data == b"proceed":
-            self._wrap_tls()
-            logger.info("TLS upgrade successful.")
+        if msg.message_data != b"proceed":
+            if self.tls_mode == TlsMode.REQUIRED_STARTTLS:
+                raise IOError(f"Required TLS upgrade failed: {msg.message_data!r}")
+
+            logger.warning(f"Optional TLS upgrade failed: {msg.message_data!r}")
             return
 
-        if self.tls_mode == TlsMode.REQUIRED_STARTTLS:
-            raise IOError(f"TLS upgrade required but failed: {msg.message_data!r}")
-
-        logger.warning(f"TLS upgrade not supported by server: {msg.message_data!r}")
+        try:
+            self._wrap_tls()
+            return
+        except Exception as e:
+            match self.tls_mode:
+                case TlsMode.REQUIRED_STARTTLS:
+                    raise IOError("Required TLS upgrade failed.") from e
+                case TlsMode.OPTIONAL_STARTTLS:
+                    logger.warning(f"Optional TLS upgrade failed: {e}")
+                    self.disconnect()
+                    logger.info("Reconnecting without TLS.")
+                    self.tls_mode = TlsMode.DISABLED
+                    self.connect()
+                    return
+                case _:
+                    raise e
 
     def disconnect(self):
         """
@@ -116,23 +142,15 @@ class LddsClient:
 
         :return: None
         """
-        any_socket_closed = False
-
-        for attr in ["socket", "raw_socket"]:
-            sock = getattr(self, attr, None)
-            if sock:
-                try:
-                    sock.close()
-                    any_socket_closed = True
-                    logger.debug(f"Closed {attr}")
-
-                except IOError as ex:
-                    logger.error(f"Error closing {attr}: {ex}")
+        if self.socket:
+            try:
+                self.socket.close()
+                logger.debug("Closed socket")
+            except IOError as ex:
+                logger.error(f"Error closing socket: {ex}")
 
         self.socket = None
-        self.raw_socket = None
-        if any_socket_closed:
-            logger.info(f"Disconnected from {self.host}:{self.port}")
+        logger.info(f"Disconnected from {self.host}:{self.port}")
 
     def send_data(
         self,
@@ -259,7 +277,6 @@ class LddsClient:
         :return: The received DCP block as bytearray.
         """
         msg_id = LddsMessageIds.dcp_block
-        max_data_length = LddsMessageConstants.MAX_DATA_LENGTH
         dcp_messages = []
         try:
             while True:
@@ -274,9 +291,8 @@ class LddsClient:
                 dcp_messages.append(response)
 
             return dcp_messages
-        except Exception as err:
-            logger.debug(f"Error receiving data: {err}")
-            raise err
+        except Exception as e:
+            raise e
 
     def send_goodbye(self):
         """
@@ -286,5 +302,4 @@ class LddsClient:
         """
         message_id = LddsMessageIds.goodbye
         ldds_message = self.request_dcp_message(message_id, "")
-        server_error = ldds_message.server_error
         logger.debug(ldds_message.to_bytes())

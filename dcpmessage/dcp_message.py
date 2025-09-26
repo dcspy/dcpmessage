@@ -79,6 +79,7 @@ class DcpMessage:
 
         try:
             client.connect()
+            logger.info(f"Successfully connected to {host}:{port}")
         except Exception as e:
             logger.error("Failed to connect to server.")
             raise e
