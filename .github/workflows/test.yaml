@@ -19,4 +19,4 @@ jobs:
           python-version: "3.13"
 
       - name: Run unit tests
-        run: python -m unittest discover -s tests -p 'test_*.py'
+        run: python -m unittest discover -s ./tests/unit/ -p 'test_*.py'

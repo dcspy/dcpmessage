@@ -1,10 +1,9 @@
 from binascii import hexlify
-from typing import Union
 
 
 class ByteUtil:
     @staticmethod
-    def extract_string(b: Union[bytes, bytearray], offset: int = 0) -> str:
+    def extract_string(b: bytes | bytearray, offset: int = 0) -> str:
         """
         Pull a null-terminated string out of a byte array starting at given offset.
 
@@ -19,7 +18,7 @@ class ByteUtil:
             return b[offset:end].decode()
 
     @staticmethod
-    def to_hex_string(b: Union[bytes, bytearray]):
+    def to_hex_string(b: bytes | bytearray):
         """
         Convert byte array to hex string.
 

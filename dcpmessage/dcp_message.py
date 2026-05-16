@@ -1,7 +1,5 @@
 import logging
-import ssl
 from pathlib import Path
-from typing import Union
 
 from .ldds_client import LddsClient, TlsMode
 from .ldds_message import LddsMessage
@@ -16,11 +14,14 @@ class DcpMessage:
     from a remote server using the LDDS protocol.
     """
 
+    DATA_LENGTH = 32  # Standard length of the data field in a DCP message
+    HEADER_LENGTH = 37  # Standard length of the header in a DCP message
+
     @staticmethod
     def get(
         username: str,
         password: str,
-        search_criteria: Union[dict, str, Path],
+        search_criteria: dict | str | Path,
         host: str,
         port: int = 16003,
         timeout: int = 30,
@@ -57,24 +58,13 @@ class DcpMessage:
             tls_mode = TlsMode(tls_mode)
         except ValueError:
             valid_values = ", ".join(f"{e.value} ({e.name})" for e in TlsMode)
-            raise ValueError(
-                f"Invalid tls_mode: {tls_mode}. Must be one of: {valid_values}"
-            )
-
-        match tls_mode:
-            case TlsMode.DISABLED:
-                ssl_context = None
-            case _:
-                ssl_context = ssl.create_default_context(
-                    purpose=ssl.Purpose.SERVER_AUTH
-                )
+            raise ValueError(f"Invalid tls_mode: {tls_mode}. Must be one of: {valid_values}")
 
         client = LddsClient(
             host=host,
             port=port,
             timeout=timeout,
             tls_mode=tls_mode,
-            ssl_context=ssl_context,
         )
 
         try:
@@ -106,9 +96,13 @@ class DcpMessage:
             client.disconnect()
             raise e
 
-        # Retrieve the DCP block and process it into individual messages
-        dcp_blocks = client.request_dcp_blocks()
-        dcp_messages = DcpMessage._explode(dcp_blocks)
+        try:
+            dcp_blocks = client.request_dcp_blocks()
+            dcp_messages = DcpMessage._explode(dcp_blocks)
+        except Exception as e:
+            logger.error("Failed to retrieve DCP blocks.")
+            client.disconnect()
+            raise e
 
         client.send_goodbye()
         client.disconnect()
@@ -125,9 +119,6 @@ class DcpMessage:
         :return: A list of individual DCP messages.
         """
 
-        _DATA_LENGTH = 32  # Standard length of the data field in a DCP message
-        _HEADER_LENGTH = 37  # Standard length of the header in a DCP message
-
         dcp_messages = []
 
         for ldds_message in message_blocks:
@@ -137,13 +128,15 @@ class DcpMessage:
                 # Extract the length of the current message
                 message_length = int(
                     message[
-                        (start_index + _DATA_LENGTH) : (start_index + _HEADER_LENGTH)
+                        (start_index + DcpMessage.DATA_LENGTH) : (
+                            start_index + DcpMessage.HEADER_LENGTH
+                        )
                     ]
                 )
                 # Extract the entire message using the determined length
-                end_index = start_index + _HEADER_LENGTH + message_length
+                end_index = start_index + DcpMessage.HEADER_LENGTH + message_length
                 dcp_message = message[start_index:end_index]
                 dcp_messages.append(dcp_message)
-                start_index += _HEADER_LENGTH + message_length
+                start_index += DcpMessage.HEADER_LENGTH + message_length
 
         return dcp_messages

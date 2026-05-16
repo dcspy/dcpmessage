@@ -107,15 +107,13 @@ class ServerError:
         self.message = message
         self.server_code_no = server_code_no
         self.system_code_no = system_code_no
-        self.is_end_of_message = self.is_end_of_message()
 
+    @property
     def is_end_of_message(self):
-        if self.server_code_no in (
+        return self.server_code_no in (
             ServerErrorCode.DUNTIL.value,
             ServerErrorCode.DUNTILDRS.value,
-        ):
-            return True
-        return False
+        )
 
     @property
     def description(self):
@@ -134,9 +132,7 @@ class ServerError:
             return ServerError("")
         error_string = ByteUtil.extract_string(message)
         split_error_string = error_string[1:].split(",", maxsplit=2)
-        sever_code_no, system_code_no, error_string = [
-            x.strip() for x in split_error_string
-        ]
+        sever_code_no, system_code_no, error_string = [x.strip() for x in split_error_string]
         return ServerError(error_string, int(sever_code_no), int(system_code_no))
 
     def raise_exception(self):
@@ -147,9 +143,11 @@ class ServerError:
             return "No Server Error"
 
         server_error_code = ServerErrorCode(self.server_code_no)
-        r = f"System Code #{self.system_code_no}; "
-        r += f"Server Code #{server_error_code.value} - {self.message} ({server_error_code.description})"
-        return r
+        return (
+            f"System Code #{self.system_code_no}; "
+            f"Server Code #{server_error_code.value} - "
+            f"{self.message} ({server_error_code.description})"
+        )
 
     def __eq__(self, other):
         return (

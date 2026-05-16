@@ -1,9 +1,8 @@
 import logging
 import socket
-from datetime import datetime, timezone
+import ssl
+from datetime import UTC, datetime
 from enum import Enum
-from ssl import SSLContext
-from typing import Optional, Union
 
 from .credentials import Credentials, Sha1, Sha256
 from .ldds_message import LddsMessage, LddsMessageIds
@@ -14,7 +13,8 @@ logger = logging.getLogger(__name__)
 
 class TlsMode(Enum):
     """
-    Enum representing levels of Transport Layer Security (TLS) to apply during the connection to the server.
+    Enum representing levels of Transport Layer Security (TLS) to apply during the connection
+    to the server.
     """
 
     # No TLS encryption will be used at all.
@@ -42,9 +42,8 @@ class LddsClient:
         self,
         host: str,
         port: int,
-        timeout: Union[float, int],
+        timeout: float | int,
         tls_mode: TlsMode,
-        ssl_context: Optional[SSLContext],
     ):
         """
         Initialize the LddsClient with the provided host, port, and timeout.
@@ -53,14 +52,12 @@ class LddsClient:
         :param port: The port number to connect to on the remote server.
         :param timeout: The timeout duration for the socket connection in seconds.
         :param tls_mode: Whether to directly use TLS, START_TLS, or no encryption
-        :param ssl_context: SSL information required to establish TLS encryption
         """
         self.host = host
         self.port = port
         self.timeout = timeout
         self.socket = None
         self.tls_mode = tls_mode
-        self.ssl_context = ssl_context
         self._connection_attempts = 0
 
     def connect(self) -> None:
@@ -72,9 +69,7 @@ class LddsClient:
         :return: None
         """
         if self._connection_attempts > 1:
-            raise IOError(
-                f"Failed to connect to {self.host}:{self.port} after 2 attempts"
-            )
+            raise OSError(f"Failed to connect to {self.host}:{self.port} after 2 attempts")
 
         self._connection_attempts += 1
         try:
@@ -82,31 +77,35 @@ class LddsClient:
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.settimeout(self.timeout)
             self.socket.connect((self.host, self.port))
-        except socket.timeout as e:
-            raise IOError(f"Connection to {self.host}:{self.port} timed out") from e
-        except socket.error as e:
-            raise IOError(f"Cannot connect to {self.host}:{self.port}") from e
+        except TimeoutError as e:
+            raise OSError(f"Connection to {self.host}:{self.port} timed out") from e
+        except OSError as e:
+            raise OSError(f"Cannot connect to {self.host}:{self.port}") from e
+
+        if self.tls_mode == TlsMode.DISABLED:
+            logger.info(f"Connected to {self.host}:{self.port} without TLS.")
+            return
 
         self._handle_tls()
 
     def _handle_tls(self):
         match self.tls_mode:
-            case TlsMode.DISABLED:
-                return
             case TlsMode.IMMEDIATE_TLS:
                 self._wrap_tls()
+                logger.info(f"Connected to {self.host}:{self.port} with TLS.")
             case TlsMode.OPTIONAL_STARTTLS | TlsMode.REQUIRED_STARTTLS:
                 self._attempt_starttls_upgrade()
+            case _:
+                raise ValueError(f"Invalid TLS mode: {self.tls_mode}")
 
     def _wrap_tls(self):
+        ssl_context = ssl.create_default_context(purpose=ssl.Purpose.SERVER_AUTH)
         try:
-            self.socket = self.ssl_context.wrap_socket(
-                self.socket, server_hostname=self.host
-            )
+            self.socket = ssl_context.wrap_socket(self.socket, server_hostname=self.host)
             logger.info("TLS upgrade successful.")
-        except Exception as e:
-            logger.debug("wrap_socket failed.")
-            raise e
+        except Exception:
+            logger.error("wrap_socket failed.")
+            raise
 
     def _attempt_starttls_upgrade(self):
         logger.info("Attempting STARTTLS upgrade.")
@@ -114,7 +113,7 @@ class LddsClient:
 
         if msg.message_data != b"proceed":
             if self.tls_mode == TlsMode.REQUIRED_STARTTLS:
-                raise IOError(f"Required TLS upgrade failed: {msg.message_data!r}")
+                raise OSError(f"Required TLS upgrade failed: {msg.message_data!r}")
 
             logger.warning(f"Optional TLS upgrade failed: {msg.message_data!r}")
             return
@@ -125,7 +124,7 @@ class LddsClient:
         except Exception as e:
             match self.tls_mode:
                 case TlsMode.REQUIRED_STARTTLS:
-                    raise IOError("Required TLS upgrade failed.") from e
+                    raise OSError("Required TLS upgrade failed.") from e
                 case TlsMode.OPTIONAL_STARTTLS:
                     logger.warning(f"Optional TLS upgrade failed: {e}")
                     self.disconnect()
@@ -146,7 +145,7 @@ class LddsClient:
             try:
                 self.socket.close()
                 logger.debug("Closed socket")
-            except IOError as ex:
+            except OSError as ex:
                 logger.error(f"Error closing socket: {ex}")
 
         self.socket = None
@@ -164,7 +163,7 @@ class LddsClient:
         :return: None
         """
         if self.socket is None:
-            raise IOError("Client socket closed.")
+            raise OSError("Client socket closed.")
         self.socket.sendall(data)
 
     def receive_data(
@@ -179,17 +178,17 @@ class LddsClient:
         :raises IOError: If the socket is not connected.
         """
         if self.socket is None:
-            raise IOError("Client socket closed.")
+            raise OSError("Client socket closed.")
 
         data = self.socket.recv(buffer_size)
         if len(data) == 0:
-            raise IOError("Client socket closed.")
+            raise OSError("Client socket closed.")
 
         ldds_message_length = LddsMessage.get_total_length(data)
         while len(data) < ldds_message_length:
             chunk = self.socket.recv(buffer_size)
             if not chunk:
-                raise IOError("Incomplete data received from server.")
+                raise OSError("Incomplete data received from server.")
             data += chunk
 
         return data
@@ -211,10 +210,7 @@ class LddsClient:
         credentials = Credentials(username=user_name, password=password)
 
         for hash_algo in [Sha1, Sha256]:
-            auth_str = credentials.get_authenticated_hello(
-                datetime.now(timezone.utc), hash_algo()
-            )
-            logger.debug(auth_str)
+            auth_str = credentials.get_authenticated_hello(datetime.now(UTC), hash_algo())
             ldds_message = self.request_dcp_message(msg_id, auth_str)
             server_error = ldds_message.server_error
             if server_error is None:
@@ -228,7 +224,7 @@ class LddsClient:
     def request_dcp_message(
         self,
         message_id,
-        message_data: Union[str, bytes, bytearray] = "",
+        message_data: str | bytes | bytearray = "",
     ) -> LddsMessage:
         """
         Request a DCP (Data Collection Platform) message from the LDDS server.
@@ -257,9 +253,7 @@ class LddsClient:
         """
         data_to_send = bytearray(50) + bytes(search_criteria)
         logger.debug(f"Sending criteria message (size = {len(data_to_send)} bytes)")
-        ldds_message = self.request_dcp_message(
-            LddsMessageIds.search_criteria, data_to_send
-        )
+        ldds_message = self.request_dcp_message(LddsMessageIds.search_criteria, data_to_send)
 
         server_error = ldds_message.server_error
         if server_error is None:
@@ -278,21 +272,17 @@ class LddsClient:
         """
         msg_id = LddsMessageIds.dcp_block
         dcp_messages = []
-        try:
-            while True:
-                response = self.request_dcp_message(msg_id)
-                server_error = response.server_error
-                if server_error is not None:
-                    if server_error.is_end_of_message:
-                        logger.info(server_error.description)
-                        break
-                    else:
-                        server_error.raise_exception()
-                dcp_messages.append(response)
-
-            return dcp_messages
-        except Exception as e:
-            raise e
+        while True:
+            response = self.request_dcp_message(msg_id)
+            server_error = response.server_error
+            if server_error is not None:
+                if server_error.is_end_of_message:
+                    logger.info(server_error.description)
+                    break
+                else:
+                    server_error.raise_exception()
+            dcp_messages.append(response)
+        return dcp_messages
 
     def send_goodbye(self):
         """

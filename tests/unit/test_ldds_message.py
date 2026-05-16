@@ -37,7 +37,5 @@ class TestLddsMessage(unittest.TestCase):
             b"FAF0n00049A081B07E24204153353G30-0NN096WUB00012`BST@KZ@K"
         )
         with self.assertRaises(LddsMessageError) as _:
-            self.assertEqual(
-                str(parsed_message.error), "Inconsistent LDDS message length"
-            )
+            self.assertEqual(str(parsed_message.error), "Inconsistent LDDS message length")
             raise parsed_message.error

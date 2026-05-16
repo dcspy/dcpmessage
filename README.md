@@ -1,6 +1,6 @@
 # dcpmessage
 
-`dcpmessage` is a lightweight Python library for retrieving **GOES DCS messages** from **LRGS servers** 
+`dcpmessage` is a lightweight Python library for retrieving **GOES DCS messages** from **LRGS servers**.
 
 > 🔹 Note: This package only retrieves DCP messages. Decoding, processing, or archiving must be handled separately.
 

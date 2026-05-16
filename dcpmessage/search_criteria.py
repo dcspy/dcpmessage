@@ -1,6 +1,5 @@
 import json
 import logging
-import os
 from dataclasses import dataclass
 from enum import UNIQUE, Enum, verify
 
@@ -49,9 +48,7 @@ class DcpAddress:
         :raises AssertionError: If the address is not 8 characters long.
         """
         if len(address) != 8:
-            raise ValueError(
-                f"length of DCP address '{address}' is not 8 characters long."
-            )
+            raise ValueError(f"length of DCP address '{address}' is not 8 characters long.")
         self.address = address
 
     def __eq__(self, other):
@@ -100,7 +97,7 @@ class SearchCriteria:
         :return: A SearchCriteria object.
         :raises Exception: If there is an issue parsing the JSON file.
         """
-        with open(file, "r") as json_file:
+        with open(file) as json_file:
             json_data = json.load(json_file)
         return cls.from_dict(json_data)
 
@@ -119,21 +116,20 @@ class SearchCriteria:
 
         lrgs_since, lrgs_until, dcp_addresses, sources = "last", "now", [], []
         try:
-            for key_word_, data in data.items():
+            for key_word_, value in data.items():
                 match key_word_:
                     case "DRS_SINCE":
-                        lrgs_since = data
+                        lrgs_since = value
                     case "DRS_UNTIL":
-                        lrgs_until = data
+                        lrgs_until = value
                     case "DCP_ADDRESS":
-                        data = list(set(data))
-                        dcp_addresses = [DcpAddress(x) for x in data]
+                        dcp_addresses = [DcpAddress(x) for x in set(value)]
                     case "SOURCE":
-                        data = list(set(data))
-                        sources = [DcpMessageSource[x].value for x in data]
+                        sources = [DcpMessageSource[x].value for x in set(value)]
                     case _:
                         logger.debug(
-                            f"Unrecognized key word {key_word_} in Search Criteria. Will be ignored."
+                            "Unrecognized key word %s in Search Criteria. Will be ignored.",
+                            key_word_,
                         )
             search_criteria = cls(lrgs_since, lrgs_until, dcp_addresses, sources)
             logger.debug(str(search_criteria))
@@ -151,8 +147,13 @@ class SearchCriteria:
         :param source: The source identifier to add.
         """
         if self.num_sources >= SearchCriteriaConstants.max_sources:
+            logger.warning(
+                "Maximum number of sources (%d) reached; source %s will be ignored.",
+                SearchCriteriaConstants.max_sources,
+                source,
+            )
             return
-        if source not in self.sources:
+        if source not in self.sources[: self.num_sources]:
             self.sources[self.num_sources] = source
             self.num_sources += 1
 
@@ -162,20 +163,18 @@ class SearchCriteria:
 
         :return: A string representation of the search criteria.
         """
-        line_separator = os.linesep
-
         ret = ["#\n# LRGS Search Criteria\n#\n"]
 
         if self.lrgs_since:
-            ret.append(f"DRS_SINCE: {self.lrgs_since}{line_separator}")
+            ret.append(f"DRS_SINCE: {self.lrgs_since}\n")
         if self.lrgs_until:
-            ret.append(f"DRS_UNTIL: {self.lrgs_until}{line_separator}")
+            ret.append(f"DRS_UNTIL: {self.lrgs_until}\n")
         for dcp_address_ in self.dcp_address:
-            ret.append(f"DCP_ADDRESS: {dcp_address_.address}{line_separator}")
+            ret.append(f"DCP_ADDRESS: {dcp_address_.address}\n")
 
         for i in range(self.num_sources):
             source_name = DcpMessageSource(self.sources[i]).name
-            ret.append(f"SOURCE: {source_name}{line_separator}")
+            ret.append(f"SOURCE: {source_name}\n")
 
         return "".join(ret)
 
@@ -203,5 +202,8 @@ class SearchCriteria:
         for explicit_dcp_address in self.dcp_address:
             if explicit_dcp_address not in other.dcp_address:
                 return False
+
+        if set(self.sources[: self.num_sources]) != set(other.sources[: other.num_sources]):
+            return False
 
         return True

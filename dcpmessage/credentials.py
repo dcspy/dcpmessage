@@ -20,11 +20,10 @@ class HashAlgo:
         """
         Initialize the HashAlgo with a specific hashing algorithm.
 
-        :param algorithm: The name of the hashing algorithm (e.g., "sha1", "sha256").
+        :param algorithm: The name of the hashing algorithm (e.g., "sha1",
+        "sha256").
         """
-        assert algorithm in {"sha1", "sha256"}, (
-            f"{algorithm} is not a supported hash algorithm"
-        )
+        assert algorithm in {"sha1", "sha256"}, f"{algorithm} is not a supported hash algorithm"
         self.algorithm = algorithm
 
     def new(self):
@@ -40,7 +39,8 @@ class Sha1(HashAlgo):
     """
     A class representing the SHA-1 hashing algorithm.
 
-    Inherits from the HashAlgo class and is pre-configured with the "sha1" algorithm.
+    Inherits from the HashAlgo class and is pre-configured with the "sha1"
+    algorithm.
     """
 
     def __init__(self):
@@ -54,7 +54,8 @@ class Sha256(HashAlgo):
     """
     A class representing the SHA-256 hashing algorithm.
 
-    Inherits from the HashAlgo class and is pre-configured with the "sha256" algorithm.
+    Inherits from the HashAlgo class and is pre-configured with the "sha256"
+    algorithm.
     """
 
     def __init__(self):
@@ -79,7 +80,8 @@ class Credentials:
         """
         Generate the preliminary hash for the password.
 
-        This method creates a hash by combining the username and password multiple times.
+        This method creates a hash by combining the username and password
+        multiple times.
 
         :param password: The password to hash.
         :return: The resulting hash as bytes.
@@ -97,7 +99,8 @@ class Credentials:
         """
         Generate an authenticator hash using a specified hash algorithm.
 
-        This hash is used for authenticating the user based on the current time and the user's credentials.
+        This hash is used for authenticating the user based on the current time and the
+        user's credentials.
 
         :param time: The current time as a datetime object.
         :param hash_algo: The hashing algorithm to use (e.g., Sha1, Sha256).
@@ -107,7 +110,6 @@ class Credentials:
         time_b = time_t.to_bytes(length=4, byteorder="big")
         username_b = self.username.encode("utf-8")
 
-        """Create an authenticator."""
         md = hash_algo.new()
         md.update(username_b)
         md.update(self.preliminary_hash)
@@ -122,18 +124,17 @@ class Credentials:
         """
         Create an authenticated hello message for the user.
 
-        This method combines the username, current time, authenticator hash, and protocol version
-        into a single string used for authentication with the server.
+        This method combines the username, current time, authenticator hash, and
+        protocol version into a single string used for authentication with the server.
 
         :param time: The current time as a datetime object.
-        :param hash_algo: The hashing algorithm to use for the authenticator hash (e.g., Sha1, Sha256).
+        :param hash_algo: The hashing algorithm to use for the authenticator hash
+        (e.g., Sha1, Sha256).
         :return: The authenticated hello message as a string.
         """
         authenticator_hash = self.get_authenticator_hash(time, hash_algo)
         time_str = time.strftime("%y%j%H%M%S")
         protocol_version = 14
 
-        authenticated_hello = (
-            f"{self.username} {time_str} {authenticator_hash} {protocol_version}"
-        )
+        authenticated_hello = f"{self.username} {time_str} {authenticator_hash} {protocol_version}"
         return authenticated_hello
