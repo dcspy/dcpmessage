@@ -43,7 +43,7 @@ Supported Fields
      - End time for data query (e.g., ``"now"``)
    * - ``SOURCE``
      - ``list[string]``
-     - Must be one or both of: ``"GOES_SELFTIMED"``, ``"GOES_RANDOM"``
+     - One or more of: ``"GOES"``, ``"GOES_SELFTIMED"``, ``"GOES_RANDOM"``
    * - ``DCP_ADDRESS``
      - ``list[string]``
      - One or more DCP addresses to query
